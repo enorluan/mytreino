@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MyTreino</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0f0f;--card:#1a1a1a;--orange:#f7941d;--blue:#3b5bdb;--blue-light:#748ffc;--text:#f0f0f0;--muted:#888;--radius:14px;--green:#2ecc71}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden}
+/* HEADER */
+.header{background:linear-gradient(135deg,#111 0%,#1a1208 100%);padding:16px 16px 0;border-bottom:2px solid #2a2a2a;position:sticky;top:0;z-index:100}
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;color:var(--orange);line-height:1}
+.logo span{color:#fff}
+.header-right{display:flex;align-items:center;gap:8px}
+.wake-dot{width:7px;height:7px;border-radius:50%;background:#333;flex-shrink:0;transition:background .3s}
+.wake-dot.on{background:var(--green);box-shadow:0 0 5px var(--green)}
+.streak-badge{background:#1a1208;border:1px solid var(--orange);border-radius:20px;padding:4px 10px;font-size:11px;font-weight:800;color:var(--orange);display:flex;align-items:center;gap:4px}
+.btn-hist{background:none;border:1px solid #333;color:var(--muted);font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;padding:5px 10px;border-radius:20px;cursor:pointer}
+.btn-hist:active{background:#222;color:#fff}
+.btn-reset{background:none;border:1px solid #444;color:var(--muted);font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;padding:5px 10px;border-radius:20px;cursor:pointer}
+.tabs-row{display:flex;align-items:center}
+.tabs{display:flex;overflow-x:auto;scrollbar-width:none;flex:1}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;padding:10px 12px;font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;text-transform:uppercase;white-space:nowrap;transition:all .2s}
+.tab.active{color:var(--orange);border-bottom-color:var(--orange)}
+.tab .dot{display:inline-block;width:5px;height:5px;background:var(--green);border-radius:50%;margin-left:4px;vertical-align:middle;opacity:0}
+.tab.completed .dot{opacity:1}
+.btn-add-day{flex-shrink:0;background:none;border:none;color:#444;font-size:20px;padding:8px 10px 11px;cursor:pointer;line-height:1}
+.btn-add-day:active{color:var(--orange)}
+/* CONTENT */
+.content{padding:14px 14px 120px}
+.day-panel{display:none}.day-panel.active{display:block}
+/* DAY HEADER */
+.day-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px}
+.day-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--orange)}
+.chrono{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--muted);letter-spacing:1px;padding-top:3px}
+.chrono.running{color:var(--green)}
+.day-subtitle{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.progress-wrap{background:#222;border-radius:10px;height:8px;margin-bottom:5px;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--orange),#ffba08);border-radius:10px;transition:width .4s;width:0%}
+.progress-label{font-size:11px;color:var(--muted);font-weight:700;text-align:right;margin-bottom:12px}
+/* CARDS */
+.exercise-card{background:var(--card);border:1.5px solid #2a2a2a;border-radius:var(--radius);margin-bottom:9px;overflow:hidden;transition:border-color .25s,background .25s;user-select:none;-webkit-user-select:none}
+.exercise-card.done{background:#1e1208;border-color:var(--orange)}
+.exercise-card.dragging{opacity:.5;border-color:var(--orange)}
+.exercise-main{display:flex;align-items:center;gap:10px;padding:13px;cursor:pointer}
+.drag-handle{color:#2a2a2a;font-size:16px;cursor:grab;padding:0 2px;flex-shrink:0;touch-action:none}
+.drag-handle:active{color:var(--orange)}
+.ex-number{font-family:'Bebas Neue',sans-serif;font-size:20px;color:#333;min-width:24px;line-height:1;transition:color .25s}
+.exercise-card.done .ex-number{color:var(--orange)}
+.ex-info{flex:1;min-width:0}
+.ex-name{font-size:14px;font-weight:800;color:var(--text);line-height:1.3;word-break:break-word}
+.exercise-card.done .ex-name{text-decoration:line-through;color:var(--muted)}
+.ex-sets{font-size:11px;font-weight:700;color:var(--blue-light);margin-top:2px}
+.exercise-card.done .ex-sets{color:#555}
+.ex-right{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.ex-check{width:26px;height:26px;border-radius:50%;border:2px solid #333;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .25s;cursor:pointer}
+.exercise-card.done .ex-check{background:var(--orange);border-color:var(--orange);color:#000}
+.edit-btn{background:none;border:none;color:#333;font-size:17px;padding:3px;cursor:pointer;line-height:1}
+.edit-btn:active{color:var(--orange)}
+/* EXPAND */
+.exercise-expand{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.exercise-card.open .exercise-expand{max-height:600px;border-top:1px solid #222}
+.expand-inner{padding:11px 13px;display:flex;gap:9px;flex-direction:column}
+.expand-row{display:flex;gap:8px;align-items:center;width:100%}
+.series-row{display:flex;gap:5px;flex-wrap:wrap;width:100%}
+.serie-btn{border:2px solid #333;background:none;border-radius:8px;color:var(--muted);font-family:'Bebas Neue',sans-serif;font-size:14px;padding:5px 9px;cursor:pointer;transition:all .2s;min-width:38px;text-align:center}
+.serie-btn.done{background:var(--orange);border-color:var(--orange);color:#000}
+.carga-wrap{display:flex;align-items:center;gap:7px;flex:1}
+.carga-label{font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:1px;white-space:nowrap}
+.carga-input{background:#111;border:1.5px solid #333;border-radius:8px;color:var(--orange);font-family:'Bebas Neue',sans-serif;font-size:18px;width:72px;padding:5px 8px;text-align:center;outline:none;-webkit-appearance:none}
+.carga-input:focus{border-color:var(--orange)}
+.carga-unit{font-size:11px;color:var(--muted);font-weight:700}
+.carga-hist{font-size:10px;color:#555;font-weight:700;margin-left:2px}
+.timer-btn{background:var(--blue);border:none;border-radius:9px;color:#fff;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;padding:7px 13px;cursor:pointer;flex-shrink:0}
+.ex-tip{font-size:11px;color:#555;font-style:italic;line-height:1.5;width:100%;padding-top:9px;border-top:1px solid #222}
+.ex-note-wrap{width:100%}
+.ex-note{width:100%;background:#111;border:1.5px solid #222;border-radius:8px;color:#777;font-family:'Nunito',sans-serif;font-size:12px;font-weight:600;padding:8px 10px;outline:none;resize:none;min-height:36px}
+.ex-note:focus{border-color:#444;color:var(--text)}
+.btn-add-ex{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px;background:none;border:1.5px dashed #252525;border-radius:var(--radius);color:#3a3a3a;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer;margin-top:3px;text-transform:uppercase;letter-spacing:.5px}
+.btn-add-ex:active{border-color:var(--orange);color:var(--orange)}
+/* TIMER MODAL */
+.timer-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.97);z-index:200;align-items:center;justify-content:center}
+.timer-modal.show{display:flex}
+.timer-modal.flash{animation:flashbg .2s ease}
+@keyframes flashbg{0%{background:rgba(247,148,29,.3)}100%{background:rgba(0,0,0,.97)}}
+.timer-box{text-align:center;padding:20px;width:100%;max-width:320px}
+.timer-box-label{font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:2px;margin-bottom:6px}
+.timer-box-name{font-size:13px;color:var(--text);font-weight:700;margin-bottom:20px;opacity:.6;max-width:260px;margin-left:auto;margin-right:auto}
+.timer-big{font-family:'Bebas Neue',sans-serif;font-size:120px;color:var(--orange);line-height:1;letter-spacing:4px;margin-bottom:10px}
+.timer-big.urgent{color:#e74c3c;animation:pulse .4s infinite alternate}
+.timer-big.done-time{color:var(--green);font-size:70px;animation:none}
+@keyframes pulse{from{opacity:1}to{opacity:.3}}
+.timer-progress{background:#1a1a1a;border-radius:6px;height:5px;margin-bottom:28px;overflow:hidden}
+.timer-progress-bar{height:100%;background:var(--orange);border-radius:6px;transition:width 1s linear}
+.timer-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.timer-action-btn{border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;padding:12px 20px;cursor:pointer}
+.btn-tcancel{background:#1a1a1a;color:var(--muted)}
+.btn-tplus{background:#1a1a1a;color:var(--text)}
+.btn-tstop{background:#c0392b;color:#fff;font-size:15px;padding:14px 28px}
+/* CONFETE */
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:500;overflow:hidden}
+.confetti-piece{position:absolute;width:10px;height:10px;border-radius:2px;animation:confettiFall linear forwards}
+@keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+/* RESUMO */
+.resumo-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:600;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.resumo-overlay.show{display:flex}
+.resumo-box{background:var(--card);border:2px solid var(--orange);border-radius:20px;padding:28px 22px;width:92%;max-width:340px;text-align:center}
+.resumo-box h2{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--orange);letter-spacing:2px;margin-bottom:4px}
+.resumo-box .sub{font-size:12px;color:var(--muted);margin-bottom:20px}
+.resumo-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.stat-card{background:#111;border-radius:12px;padding:14px 10px}
+.stat-val{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--orange);line-height:1}
+.stat-label{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+.btn-close-resumo{width:100%;border:none;border-radius:12px;background:var(--orange);color:#000;font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;padding:14px;cursor:pointer}
+/* HISTORICO */
+.hist-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:600;flex-direction:column}
+.hist-overlay.show{display:flex}
+.hist-header{padding:20px 16px 12px;border-bottom:1px solid #222;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.hist-header h2{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--orange);letter-spacing:2px}
+.btn-close-hist{background:none;border:none;color:var(--muted);font-size:24px;cursor:pointer;padding:4px}
+.hist-body{flex:1;overflow-y:auto;padding:14px 16px 40px}
+.hist-day-title{font-family:'Bebas Neue',sans-serif;font-size:14px;color:var(--muted);letter-spacing:1px;margin:16px 0 8px;text-transform:uppercase}
+.hist-day-title:first-child{margin-top:0}
+.hist-item{background:var(--card);border-radius:10px;padding:10px 14px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.hist-name{font-size:13px;font-weight:700;color:var(--text)}
+.hist-date{font-size:11px;color:var(--muted);margin-top:2px}
+.hist-carga{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--orange)}
+.hist-empty{text-align:center;color:var(--muted);font-size:14px;padding:40px 0}
+/* MODALS */
+.modal-base{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
+.modal-base.show{display:flex}
+.modal-box{background:var(--card);border:2px solid #333;border-radius:20px;padding:24px 20px;width:92%;max-width:340px}
+.modal-box.ob{border-color:var(--orange)}
+.modal-box h3{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--orange);margin-bottom:4px;letter-spacing:1px}
+.modal-box h3.red{color:#e74c3c}
+.modal-box small{font-size:11px;color:var(--muted);display:block;margin-bottom:12px}
+.modal-box p{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.5}
+.mlabel{font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;display:block}
+.minput{width:100%;background:#111;border:1.5px solid #333;border-radius:10px;color:var(--text);font-family:'Nunito',sans-serif;font-size:15px;font-weight:700;padding:11px 13px;outline:none;margin-bottom:9px}
+.minput:focus{border-color:var(--orange)}
+.minput.blue{color:var(--blue-light);margin-bottom:14px}
+.minput.blue:focus{border-color:var(--blue-light)}
+.mbtns{display:flex;gap:8px}
+.mbtns button{flex:1;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;padding:11px;cursor:pointer}
+.btn-mc{background:#222;color:var(--text)}
+.btn-mo{background:var(--orange);color:#000}
+.btn-mr{background:#e74c3c;color:#fff}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <div class="logo">MY<span>TREINO</span></div>
+    <div class="header-right">
+      <div class="wake-dot" id="wakeDot"></div>
+      <div class="streak-badge" id="streakBadge">🔥 <span id="streakNum">0</span></div>
+      <button class="btn-hist" onclick="showHist()">Hist.</button>
+      <button class="btn-reset" onclick="showReset()">Limpar</button>
+    </div>
+  </div>
+  <div class="tabs-row">
+    <div class="tabs" id="tabs"></div>
+    <button class="btn-add-day" onclick="addDay()">+</button>
+  </div>
+</div>
+<div class="content" id="content"></div>
+
+<!-- CONFETE -->
+
+<div class="confetti-wrap" id="confettiWrap"></div>
+
+<!-- TIMER FULLSCREEN -->
+
+<div class="timer-modal" id="timerModal">
+  <div class="timer-box">
+    <div class="timer-box-label">Descanso</div>
+    <div class="timer-box-name" id="timerExName"></div>
+    <div class="timer-big" id="timerDisplay">60</div>
+    <div class="timer-progress"><div class="timer-progress-bar" id="timerProgressBar" style="width:100%"></div></div>
+    <div class="timer-actions">
+      <button class="timer-action-btn btn-tcancel" onclick="closeTimer()">Fechar</button>
+      <button class="timer-action-btn btn-tplus" onclick="addTime(30)">+30s</button>
+      <button class="timer-action-btn btn-tstop" onclick="stopTimer()">Parar</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESUMO -->
+
+<div class="resumo-overlay" id="resumoOverlay">
+  <div class="resumo-box">
+    <h2>Treino Concluido!</h2>
+    <div class="sub" id="resumoSub"></div>
+    <div class="resumo-stats">
+      <div class="stat-card"><div class="stat-val" id="rSeries">0</div><div class="stat-label">Series feitas</div></div>
+      <div class="stat-card"><div class="stat-val" id="rTempo">0min</div><div class="stat-label">Tempo total</div></div>
+      <div class="stat-card"><div class="stat-val" id="rExercicios">0</div><div class="stat-label">Exercicios</div></div>
+      <div class="stat-card"><div class="stat-val" id="rCarga">0kg</div><div class="stat-label">Carga total</div></div>
+    </div>
+    <button class="btn-close-resumo" onclick="closeResumo()">Fechar</button>
+  </div>
+</div>
+
+<!-- HISTORICO -->
+
+<div class="hist-overlay" id="histOverlay">
+  <div class="hist-header">
+    <h2>Historico de Cargas</h2>
+    <button class="btn-close-hist" onclick="closeHist()">&#10005;</button>
+  </div>
+  <div class="hist-body" id="histBody"></div>
+</div>
+
+<!-- RESET -->
+
+<div class="modal-base" id="confirmModal">
+  <div class="modal-box">
+    <h3 class="red">Limpar Treino?</h3>
+    <p>Apaga checkmarks e series marcadas. As cargas e historico ficam salvos.</p>
+    <div class="mbtns">
+      <button class="btn-mc" onclick="closeReset()">Cancelar</button>
+      <button class="btn-mr" onclick="doReset()">Limpar</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT EXERCISE -->
+
+<div class="modal-base" id="editModal">
+  <div class="modal-box ob">
+    <h3>Editar Exercicio</h3>
+    <small>Toque duplo no lapis para editar</small>
+    <label class="mlabel">Nome</label>
+    <input class="minput" id="editName" type="text">
+    <label class="mlabel">Series x Reps</label>
+    <input class="minput blue" id="editSets" type="text">
+    <div class="mbtns">
+      <button class="btn-mc" onclick="closeEdit()">Cancelar</button>
+      <button class="btn-mo" onclick="saveEdit()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD EXERCISE -->
+
+<div class="modal-base" id="addExModal">
+  <div class="modal-box ob">
+    <h3>Novo Exercicio</h3>
+    <small>Sera adicionado ao dia atual</small>
+    <label class="mlabel">Nome</label>
+    <input class="minput" id="addExName" type="text" placeholder="Ex: Supino Reto">
+    <label class="mlabel">Series x Reps</label>
+    <input class="minput blue" id="addExSets" type="text" placeholder="Ex: 4x12">
+    <div class="mbtns">
+      <button class="btn-mc" onclick="closeAddEx()">Cancelar</button>
+      <button class="btn-mo" onclick="saveAddEx()">Adicionar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD DAY -->
+
+<div class="modal-base" id="addDayModal">
+  <div class="modal-box ob">
+    <h3>Novo Dia</h3>
+    <label class="mlabel">Nome</label>
+    <input class="minput" id="addDayName" type="text" placeholder="Ex: SAB">
+    <label class="mlabel">Descricao</label>
+    <input class="minput blue" id="addDayDesc" type="text" placeholder="Ex: Cardio">
+    <div class="mbtns">
+      <button class="btn-mc" onclick="closeAddDay()">Cancelar</button>
+      <button class="btn-mo" onclick="saveAddDay()">Adicionar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var DAYNAMES=['SEG','TER','QUA','QUI','SEX','SAB','DOM'];
+var D=[
+  {id:'seg',label:'SEG',title:'Segunda-Feira',subtitle:'Peitoral - Ombro - Triceps',exercicios:[
+    {nome:'Supino Reto com Barra',series:'4x8-12',dica:''},
+    {nome:'Supino Inclinado Articulado',series:'4x8-12',dica:''},
+    {nome:'Peck Deck',series:'4x12',dica:''},
+    {nome:'Desenvolvimento Articulado Ombro',series:'4x12',dica:''},
+    {nome:'Elevacao Conjugada Frontal e Lateral',series:'4x12',dica:''},
+    {nome:'Elevacao Lateral com Halteres',series:'3x12',dica:''},
+    {nome:'Triceps Pulley',series:'4x12',dica:''},
+    {nome:'Triceps Corda na Polia',series:'4x12',dica:''},
+    {nome:'Triceps Pulley Invertida',series:'4x12',dica:''}
+  ]},
+  {id:'ter',label:'TER',title:'Terca-Feira',subtitle:'Gluteo 1 - Projecao e Forca',exercicios:[
+    {nome:'Elevacao Pelvica na Maquina',series:'5x6-12',dica:'Segura 2s no topo. Descida controlada.'},
+    {nome:'Agachamento no Smith',series:'4x8',dica:'Pes levemente a frente. 3s descendo. Sobe explodindo.'},
+    {nome:'Hack Machine',series:'4x10',dica:'Pes altos e abertos. Empurra com calcanhar.'},
+    {nome:'Abdutora tronco inclinado',series:'4x20',dica:'Ultima serie faz drop.'},
+    {nome:'Extensao de Quadril 45 graus',series:'3x12',dica:'Foco no gluteo, nao na lombar.'}
+  ]},
+  {id:'qua',label:'QUA',title:'Quarta-Feira',subtitle:'Costas - Biceps',exercicios:[
+    {nome:'Puxada Frente Aberta',series:'4x8/10/12',dica:''},
+    {nome:'Puxada Fechada',series:'4x10',dica:''},
+    {nome:'Remada no Aparelho',series:'4x10/10/10',dica:''},
+    {nome:'Remada Baixa',series:'4x10',dica:''},
+    {nome:'Remada Cavalinho',series:'4x6/8/10',dica:''},
+    {nome:'Rosca Concentrada',series:'4x12',dica:''},
+    {nome:'Rosca Direta',series:'4x12',dica:''},
+    {nome:'Rosca Alternada',series:'4x12',dica:''},
+    {nome:'Rosca Scott',series:'4x12',dica:''},
+    {nome:'Rosca 21',series:'4x7/7/7',dica:''}
+  ]},
+  {id:'qui',label:'QUI',title:'Quinta-Feira',subtitle:'Gluteo 2 - Inferior e Lateral',exercicios:[
+    {nome:'Elevacao Pelvica',series:'4x8',dica:'Menos volume. Pesado.'},
+    {nome:'Stiff Pesado',series:'4x8',dica:'Desce alongando posterior. Nao arredonda lombar.'},
+    {nome:'Leg Press Unilateral',series:'3x10 cada',dica:'Pe alto. Foco no calcanhar.'},
+    {nome:'Agachamento Sumo com Halter',series:'4x10-12',dica:'Desce profundo. Abre o quadril.'},
+    {nome:'Abdutora drop set',series:'3x falha',dica:'Ate queimar. Drop set na ultima.'}
+  ]},
+  {id:'sex',label:'SEX',title:'Sexta-Feira',subtitle:'Full Body',exercicios:[
+    {nome:'Puxada Frente Aberta',series:'4x12',dica:''},
+    {nome:'Remada Cavalinho',series:'4x12',dica:''},
+    {nome:'Supino Inclinado Articulado',series:'4x12',dica:''},
+    {nome:'Peck Deck',series:'4x12',dica:''},
+    {nome:'Desenvolvimento Articulado Ombro',series:'4x12',dica:''},
+    {nome:'Elevacao Conjugada Ombro',series:'4x12',dica:''},
+    {nome:'Rosca Direta',series:'4x12',dica:''},
+    {nome:'Rosca Alternada',series:'4x12',dica:''}
+  ]}
+];
+
+var TREINOS=JSON.parse(JSON.stringify(D));
+var state={},activeDay=TREINOS[0].id;
+var tInt=null,tSec=0,tTot=0,etTarget=null,lastTap={};
+var wakeLock=null,audioCtx=null;
+var alarmInt=null,vibrInt=null,alarmOn=false;
+var chronoInt=null,chronoSec=0,chronoRunning=false;
+var dragSrc=null;
+
+function parseSeries(s){var m=s.match(/^(\d+)x/);return m?parseInt(m[1]):4;}
+function todayStr(){return new Date().toISOString().slice(0,10);}
+function fmtDate(d){var p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
+
+// WAKE LOCK
+function initWakeLock(){
+  if('wakeLock' in navigator){
+    navigator.wakeLock.request('screen').then(function(l){
+      wakeLock=l;
+      document.getElementById('wakeDot').classList.add('on');
+      l.addEventListener('release',function(){document.getElementById('wakeDot').classList.remove('on');});
+    }).catch(function(){});
+  }
+}
+document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')initWakeLock();});
+initWakeLock();
+
+// AUDIO
+function getAudio(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
+function beep(freq,dur,vol,type){try{var c=getAudio();if(c.state==='suspended')c.resume();var o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type=type||'sine';o.frequency.value=freq||880;g.gain.setValueAtTime(vol||.5,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+dur);o.start(c.currentTime);o.stop(c.currentTime+dur);}catch(e){}}
+function playTick(){beep(660,.08,.3,'sine');}
+function playAlarmOnce(){beep(880,.15,.7,'square');setTimeout(function(){beep(880,.15,.7,'square');},200);setTimeout(function(){beep(1100,.5,.8,'square');},420);}
+function startAlarm(){alarmOn=true;playAlarmOnce();alarmInt=setInterval(function(){playAlarmOnce();},2500);vibrInt=setInterval(function(){if(navigator.vibrate)navigator.vibrate([400,200,400]);},1200);flashLoop();}
+function flashLoop(){if(!alarmOn)return;var m=document.getElementById('timerModal');m.classList.add('flash');setTimeout(function(){m.classList.remove('flash');if(alarmOn)setTimeout(flashLoop,900);},250);}
+function stopAlarm(){alarmOn=false;clearInterval(alarmInt);alarmInt=null;clearInterval(vibrInt);vibrInt=null;if(navigator.vibrate)navigator.vibrate(0);}
+document.addEventListener('touchstart',function(){try{getAudio().resume();}catch(e){}},{once:true});
+
+// CRONOMETRO
+function startChrono(){
+  if(chronoRunning)return;
+  chronoRunning=true;
+  chronoInt=setInterval(function(){
+    chronoSec++;
+    updateChronoDisplay();
+  },1000);
+}
+function updateChronoDisplay(){
+  var el=document.getElementById('chronoDisplay');
+  if(!el)return;
+  var m=Math.floor(chronoSec/60),s=chronoSec%60;
+  el.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+  el.className='chrono'+(chronoRunning?' running':'');
+}
+
+// STREAK
+function calcStreak(){
+  var hist={};
+  try{var h=localStorage.getItem('mt8_hist');if(h)hist=JSON.parse(h);}catch(e){}
+  var dates=Object.keys(hist).sort().reverse();
+  if(!dates.length)return 0;
+  var streak=0,cur=new Date();
+  cur.setHours(0,0,0,0);
+  for(var i=0;i<dates.length;i++){
+    var d=new Date(dates[i]);d.setHours(0,0,0,0);
+    var diff=Math.round((cur-d)/(1000*60*60*24));
+    if(diff===i)streak++;
+    else break;
+  }
+  return streak;
+}
+function updateStreak(){
+  document.getElementById('streakNum').textContent=calcStreak();
+}
+
+// HISTORICO DE CARGAS
+function saveHistCarga(dayId,exIdx,carga){
+  if(!carga)return;
+  var hist={};
+  try{var h=localStorage.getItem('mt8_hist');if(h)hist=JSON.parse(h);}catch(e){}
+  var today=todayStr();
+  if(!hist[today])hist[today]={};
+  var key=dayId+'_'+exIdx;
+  hist[today][key]={carga:carga,nome:TREINOS.find(function(t){return t.id===dayId;}).exercicios[exIdx].nome,day:dayId};
+  try{localStorage.setItem('mt8_hist',JSON.stringify(hist));}catch(e){}
+  updateStreak();
+}
+function getLastCarga(dayId,exIdx){
+  var hist={};
+  try{var h=localStorage.getItem('mt8_hist');if(h)hist=JSON.parse(h);}catch(e){}
+  var dates=Object.keys(hist).sort().reverse();
+  var key=dayId+'_'+exIdx;
+  var today=todayStr();
+  for(var i=0;i<dates.length;i++){
+    if(dates[i]===today)continue;
+    if(hist[dates[i]][key])return hist[dates[i]][key].carga;
+  }
+  return null;
+}
+
+// STATE
+function loadState(){
+  try{var s=localStorage.getItem('mt8');if(s){var p=JSON.parse(s);state=p.state||{};if(p.treinos)TREINOS=p.treinos;if(p.activeDay)activeDay=p.activeDay;if(p.chronoSec)chronoSec=p.chronoSec;}}catch(e){state={};}
+  var cargas={};
+  try{var cs=localStorage.getItem('mt8_cargas');if(cs)cargas=JSON.parse(cs);}catch(e){}
+  TREINOS.forEach(function(t){
+    if(!state[t.id])state[t.id]={checked:t.exercicios.map(function(){return false;}),cargas:t.exercicios.map(function(){return '';}),series:t.exercicios.map(function(){return [];}),notes:t.exercicios.map(function(){return '';}),open:null};
+    while(state[t.id].checked.length<t.exercicios.length)state[t.id].checked.push(false);
+    while(state[t.id].series.length<t.exercicios.length)state[t.id].series.push([]);
+    if(!state[t.id].cargas)state[t.id].cargas=t.exercicios.map(function(){return '';});
+    while(state[t.id].cargas.length<t.exercicios.length)state[t.id].cargas.push('');
+    if(!state[t.id].notes)state[t.id].notes=t.exercicios.map(function(){return '';});
+    while(state[t.id].notes.length<t.exercicios.length)state[t.id].notes.push('');
+    if(cargas[t.id])cargas[t.id].forEach(function(v,i){if(v)state[t.id].cargas[i]=v;});
+  });
+}
+function saveState(){
+  try{localStorage.setItem('mt8',JSON.stringify({state:state,treinos:TREINOS,activeDay:activeDay,chronoSec:chronoSec}));}catch(e){}
+  var cargas={};
+  TREINOS.forEach(function(t){cargas[t.id]=state[t.id].cargas||[];});
+  try{localStorage.setItem('mt8_cargas',JSON.stringify(cargas));}catch(e){}
+}
+
+// BUILD UI
+function buildUI(){
+  var tabs=document.getElementById('tabs'),cont=document.getElementById('content');
+  tabs.innerHTML='';cont.innerHTML='';
+  updateStreak();
+  TREINOS.forEach(function(treino,tidx){
+    var tab=document.createElement('button');
+    tab.className='tab'+(treino.id===activeDay?' active':'');
+    var allDone=state[treino.id].checked.length>0&&state[treino.id].checked.every(function(x){return x;});
+    if(allDone)tab.classList.add('completed');
+    tab.innerHTML=treino.label+'<span class="dot"></span>';
+    tab.onclick=(function(id){return function(){activeDay=id;saveState();buildUI();};})(treino.id);
+    tabs.appendChild(tab);
+
+    var panel=document.createElement('div');
+    panel.className='day-panel'+(treino.id===activeDay?' active':'');
+    var done=state[treino.id].checked.filter(function(x){return x;}).length;
+    var total=treino.exercicios.length;
+    var pct=total?Math.round(done/total*100):0;
+    var m=Math.floor(chronoSec/60),s=chronoSec%60;
+    var chronoTxt=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+    panel.innerHTML=
+      '<div class="day-header">'+
+        '<div><div class="day-title">'+treino.title+'</div><div class="day-subtitle">'+treino.subtitle+'</div></div>'+
+        '<div id="chronoDisplay" class="chrono'+(chronoRunning?' running':'')+'">'+chronoTxt+'</div>'+
+      '</div>'+
+      '<div class="progress-wrap"><div class="progress-bar" style="width:'+pct+'%"></div></div>'+
+      '<div class="progress-label">'+done+'/'+total+' - '+pct+'%</div>';
+
+    treino.exercicios.forEach(function(ex,i){
+      var isDone=state[treino.id].checked[i];
+      var isOpen=state[treino.id].open===i;
+      var carga=state[treino.id].cargas[i]||'';
+      var note=state[treino.id].notes[i]||'';
+      var seriesDone=state[treino.id].series[i]||[];
+      var numSeries=parseSeries(ex.series);
+      var lastCarga=getLastCarga(treino.id,i);
+
+      var serieBtns='<div class="series-row">';
+      for(var s2=0;s2<numSeries;s2++){
+        var sd=seriesDone.indexOf(s2)>=0;
+        serieBtns+='<button class="serie-btn'+(sd?' done':'')+'" onclick="toggleSerie(event,\''+treino.id+'\','+i+','+s2+','+numSeries+')">S'+(s2+1)+'</button>';
+      }
+      serieBtns+='</div>';
+
+      var tip=ex.dica?('<div class="ex-tip">'+ex.dica+'</div>'):'';
+      var card=document.createElement('div');
+      card.className='exercise-card'+(isDone?' done':'')+(isOpen?' open':'');
+      card.setAttribute('data-day',treino.id);
+      card.setAttribute('data-idx',i);
+      card.setAttribute('draggable','true');
+
+      card.innerHTML=
+        '<div class="exercise-main" onclick="cc(\''+treino.id+'\','+i+',event)">'+
+          '<div class="drag-handle" onmousedown="event.stopPropagation()" ontouchstart="event.stopPropagation()">&#8942;&#8942;</div>'+
+          '<div class="ex-number">'+(i+1)+'</div>'+
+          '<div class="ex-info"><div class="ex-name">'+ex.nome+'</div><div class="ex-sets">'+ex.series+'</div></div>'+
+          '<div class="ex-right">'+
+            '<button class="edit-btn" onclick="eb(event,'+tidx+','+i+')">&#9998;</button>'+
+            '<div class="ex-check" onclick="ck(event,\''+treino.id+'\','+i+')">'+(isDone?'&#10003;':'')+'</div>'+
+          '</div>'+
+        '</div>'+
+        '<div class="exercise-expand"><div class="expand-inner">'+
+          serieBtns+
+          '<div class="expand-row">'+
+            '<div class="carga-wrap">'+
+              '<span class="carga-label">Carga</span>'+
+              '<input class="carga-input" type="number" inputmode="decimal" placeholder="0" value="'+carga+'" onchange="sc(\''+treino.id+'\','+i+',this.value)" onclick="event.stopPropagation()">'+
+              '<span class="carga-unit">kg</span>'+
+              (lastCarga?'<span class="carga-hist">ant: '+lastCarga+'kg</span>':'')+ 
+            '</div>'+
+            '<button class="timer-btn" onclick="startTimer(event,'+i+','+tidx+')">Timer 60s</button>'+
+          '</div>'+
+          '<div class="ex-note-wrap">'+
+            '<textarea class="ex-note" placeholder="Observacao..." onclick="event.stopPropagation()" onchange="saveNote(\''+treino.id+'\','+i+',this.value)">'+note+'</textarea>'+
+
+```
+      '</div>'+
+      tip+
+    '</div></div>';
+
+  // drag events
+  card.addEventListener('dragstart',function(e){dragSrc=this;this.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
+  card.addEventListener('dragend',function(){this.classList.remove('dragging');dragSrc=null;});
+  card.addEventListener('dragover',function(e){e.preventDefault();e.dataTransfer.dropEffect='move';});
+  card.addEventListener('drop',function(e){
+    e.preventDefault();
+    if(dragSrc&&dragSrc!==this){
+      var srcDay=dragSrc.getAttribute('data-day');
+      var srcIdx=parseInt(dragSrc.getAttribute('data-idx'));
+      var dstIdx=parseInt(this.getAttribute('data-idx'));
+      if(srcDay===treino.id){
+        var exArr=TREINOS[tidx].exercicios;
+        var tmp=exArr.splice(srcIdx,1)[0];exArr.splice(dstIdx,0,tmp);
+        var ck2=state[srcDay].checked.splice(srcIdx,1)[0];state[srcDay].checked.splice(dstIdx,0,ck2);
+        var ca=state[srcDay].cargas.splice(srcIdx,1)[0];state[srcDay].cargas.splice(dstIdx,0,ca);
+        var sr=state[srcDay].series.splice(srcIdx,1)[0];state[srcDay].series.splice(dstIdx,0,sr);
+        var nt=state[srcDay].notes.splice(srcIdx,1)[0];state[srcDay].notes.splice(dstIdx,0,nt);
+        saveState();buildUI();
+      }
+    }
+  });
+  panel.appendChild(card);
+});
+
+var addBtn=document.createElement('button');
+addBtn.className='btn-add-ex';
+addBtn.innerHTML='+ Adicionar exercicio';
+addBtn.onclick=(function(id){return function(){openAddEx(id);};})(treino.id);
+panel.appendChild(addBtn);
+cont.appendChild(panel);
+```
+
+});
+
+// inicia cronometro se tem exercicio feito
+var anyDone=false;
+TREINOS.forEach(function(t){if(state[t.id].checked.some(function(x){return x;}))anyDone=true;});
+if(anyDone&&!chronoRunning)startChrono();
+}
+
+function toggleSerie(e,dayId,exIdx,serieIdx,total){
+e.stopPropagation();
+if(!chronoRunning)startChrono();
+var arr=state[dayId].series[exIdx]||[];
+var pos=arr.indexOf(serieIdx);
+if(pos>=0)arr.splice(pos,1);else arr.push(serieIdx);
+state[dayId].series[exIdx]=arr;
+if(arr.length>=total){
+state[dayId].checked[exIdx]=true;
+// salva carga no historico
+saveHistCarga(dayId,exIdx,state[dayId].cargas[exIdx]);
+// checa se treino completo
+checkTreinoCompleto(dayId);
+} else {
+state[dayId].checked[exIdx]=false;
+}
+saveState();buildUI();
+}
+
+function checkTreinoCompleto(dayId){
+var t=TREINOS.find(function(t){return t.id===dayId;});
+if(!t)return;
+if(state[dayId].checked.length===t.exercicios.length&&state[dayId].checked.every(function(x){return x;})){
+setTimeout(function(){showResumo(dayId);},400);
+}
+}
+
+function cc(d,i,e){if(e.target.closest(’.ex-check’)||e.target.closest(’.edit-btn’)||e.target.closest(’.serie-btn’)||e.target.closest(’.ex-note’)||e.target.closest(’.drag-handle’))return;state[d].open=(state[d].open===i)?null:i;saveState();buildUI();}
+function ck(e,d,i){e.stopPropagation();state[d].checked[i]=!state[d].checked[i];if(!state[d].checked[i])state[d].series[i]=[];if(state[d].checked[i]){saveHistCarga(d,i,state[d].cargas[i]);checkTreinoCompleto(d);}if(state[d].checked[i]&&state[d].open===i)state[d].open=null;saveState();buildUI();}
+function sc(d,i,v){state[d].cargas[i]=v;saveState();}
+function saveNote(d,i,v){state[d].notes[i]=v;saveState();}
+
+// EDIT
+function eb(e,di,ei){e.stopPropagation();var k=di+’-’+ei,now=Date.now();if(lastTap[k]&&(now-lastTap[k])<500){openEdit(di,ei);lastTap[k]=0;}else{lastTap[k]=now;}}
+function openEdit(di,ei){etTarget={di:di,ei:ei};var ex=TREINOS[di].exercicios[ei];document.getElementById(‘editName’).value=ex.nome;document.getElementById(‘editSets’).value=ex.series;document.getElementById(‘editModal’).classList.add(‘show’);setTimeout(function(){document.getElementById(‘editName’).focus();},150);}
+function closeEdit(){document.getElementById(‘editModal’).classList.remove(‘show’);etTarget=null;}
+function saveEdit(){if(!etTarget)return;var n=document.getElementById(‘editName’).value.trim(),s=document.getElementById(‘editSets’).value.trim();if(!n)return;TREINOS[etTarget.di].exercicios[etTarget.ei].nome=n;if(s)TREINOS[etTarget.di].exercicios[etTarget.ei].series=s;saveState();closeEdit();buildUI();}
+
+// ADD EX
+var addExDayId=null;
+function openAddEx(dayId){addExDayId=dayId;document.getElementById(‘addExName’).value=’’;document.getElementById(‘addExSets’).value=’’;document.getElementById(‘addExModal’).classList.add(‘show’);setTimeout(function(){document.getElementById(‘addExName’).focus();},150);}
+function closeAddEx(){document.getElementById(‘addExModal’).classList.remove(‘show’);addExDayId=null;}
+function saveAddEx(){
+var n=document.getElementById(‘addExName’).value.trim(),s=document.getElementById(‘addExSets’).value.trim()||‘4x12’;
+if(!n||!addExDayId)return;
+var tidx=TREINOS.findIndex(function(t){return t.id===addExDayId;});
+if(tidx<0)return;
+TREINOS[tidx].exercicios.push({nome:n,series:s,dica:’’});
+state[addExDayId].checked.push(false);state[addExDayId].cargas.push(’’);state[addExDayId].series.push([]);state[addExDayId].notes.push(’’);
+saveState();closeAddEx();buildUI();
+}
+
+// ADD DAY
+function addDay(){
+var used=TREINOS.map(function(t){return t.label;});
+var next=DAYNAMES.find(function(n){return used.indexOf(n)<0;})||(‘DIA’+(TREINOS.length+1));
+document.getElementById(‘addDayName’).value=next;document.getElementById(‘addDayDesc’).value=’’;
+document.getElementById(‘addDayModal’).classList.add(‘show’);setTimeout(function(){document.getElementById(‘addDayDesc’).focus();},150);
+}
+function closeAddDay(){document.getElementById(‘addDayModal’).classList.remove(‘show’);}
+function saveAddDay(){
+var label=document.getElementById(‘addDayName’).value.trim().toUpperCase()||(‘DIA’+(TREINOS.length+1));
+var desc=document.getElementById(‘addDayDesc’).value.trim()||‘Treino’;
+var titles={SEG:‘Segunda-Feira’,TER:‘Terca-Feira’,QUA:‘Quarta-Feira’,QUI:‘Quinta-Feira’,SEX:‘Sexta-Feira’,SAB:‘Sabado’,DOM:‘Domingo’};
+var id=‘day_’+Date.now();
+TREINOS.push({id:id,label:label,title:titles[label]||label,subtitle:desc,exercicios:[]});
+state[id]={checked:[],cargas:[],series:[],notes:[],open:null};
+activeDay=id;saveState();closeAddDay();buildUI();
+}
+
+// CONFETE
+function launchConfetti(){
+var wrap=document.getElementById(‘confettiWrap’);
+wrap.innerHTML=’’;
+var colors=[’#f7941d’,’#ffba08’,’#2ecc71’,’#748ffc’,’#e74c3c’,’#fff’];
+for(var i=0;i<80;i++){
+var p=document.createElement(‘div’);
+p.className=‘confetti-piece’;
+p.style.left=Math.random()*100+‘vw’;
+p.style.background=colors[Math.floor(Math.random()*colors.length)];
+p.style.width=(8+Math.random()*8)+‘px’;
+p.style.height=(8+Math.random()*8)+‘px’;
+p.style.animationDuration=(1.5+Math.random()*2)+‘s’;
+p.style.animationDelay=(Math.random()*.5)+‘s’;
+wrap.appendChild(p);
+}
+setTimeout(function(){wrap.innerHTML=’’;},4000);
+}
+
+// RESUMO
+function showResumo(dayId){
+launchConfetti();
+var t=TREINOS.find(function(t){return t.id===dayId;});
+var totalSeries=0;
+t.exercicios.forEach(function(ex,i){totalSeries+=parseSeries(ex.series);});
+var totalCarga=0;
+state[dayId].cargas.forEach(function(c,i){
+if(c)totalCarga+=parseFloat(c)*parseSeries(t.exercicios[i].series);
+});
+var m=Math.floor(chronoSec/60);
+document.getElementById(‘resumoSub’).textContent=t.title;
+document.getElementById(‘rSeries’).textContent=totalSeries;
+document.getElementById(‘rTempo’).textContent=m+‘min’;
+document.getElementById(‘rExercicios’).textContent=t.exercicios.length;
+document.getElementById(‘rCarga’).textContent=Math.round(totalCarga)+‘kg’;
+document.getElementById(‘resumoOverlay’).classList.add(‘show’);
+beep(880,.15,.6,‘square’);setTimeout(function(){beep(1100,.3,.7,‘square’);},200);
+}
+function closeResumo(){document.getElementById(‘resumoOverlay’).classList.remove(‘show’);}
+
+// HISTORICO
+function showHist(){
+var hist={};
+try{var h=localStorage.getItem(‘mt8_hist’);if(h)hist=JSON.parse(h);}catch(e){}
+var body=document.getElementById(‘histBody’);
+var dates=Object.keys(hist).sort().reverse();
+if(!dates.length){body.innerHTML=’<div class="hist-empty">Nenhum historico ainda.<br>Complete exercicios para registrar.</div>’;document.getElementById(‘histOverlay’).classList.add(‘show’);return;}
+var html=’’;
+dates.forEach(function(d){
+html+=’<div class="hist-day-title">’+fmtDate(d)+’</div>’;
+var items=hist[d];
+Object.keys(items).forEach(function(k){
+var it=items[k];
+html+=’<div class="hist-item"><div><div class="hist-name">’+it.nome+’</div></div><div class="hist-carga">’+it.carga+‘kg</div></div>’;
+});
+});
+body.innerHTML=html;
+document.getElementById(‘histOverlay’).classList.add(‘show’);
+}
+function closeHist(){document.getElementById(‘histOverlay’).classList.remove(‘show’);}
+
+// TIMER
+function startTimer(e,i,di){
+e.stopPropagation();stopAlarm();
+try{getAudio().resume();}catch(ex){}
+var nm=TREINOS[di].exercicios[i].nome;
+tSec=60;tTot=60;
+document.getElementById(‘timerExName’).textContent=nm;
+updateTD();document.getElementById(‘timerModal’).classList.add(‘show’);
+clearInterval(tInt);
+tInt=setInterval(function(){
+tSec–;
+if(tSec<=0){tSec=0;updateTD();clearInterval(tInt);startAlarm();}
+else{if(tSec<=10){playTick();if(navigator.vibrate)navigator.vibrate(40);}updateTD();}
+},1000);
+}
+function updateTD(){
+var el=document.getElementById(‘timerDisplay’),bar=document.getElementById(‘timerProgressBar’);
+el.textContent=tSec===0?‘PRONTO’:tSec;
+el.className=‘timer-big’+(tSec===0?’ done-time’:tSec<=10?’ urgent’:’’);
+bar.style.width=(tTot>0?(tSec/tTot*100):0)+’%’;
+bar.style.background=tSec<=10&&tSec>0?’#e74c3c’:‘var(–orange)’;
+}
+function addTime(s){
+stopAlarm();tSec+=s;tTot+=s;
+clearInterval(tInt);
+tInt=setInterval(function(){tSec–;if(tSec<=0){tSec=0;updateTD();clearInterval(tInt);startAlarm();}else{if(tSec<=10){playTick();if(navigator.vibrate)navigator.vibrate(40);}updateTD();}},1000);
+updateTD();
+}
+function stopTimer(){stopAlarm();clearInterval(tInt);tSec=0;updateTD();document.getElementById(‘timerModal’).classList.remove(‘show’);}
+function closeTimer(){stopAlarm();clearInterval(tInt);document.getElementById(‘timerModal’).classList.remove(‘show’);}
+
+// RESET
+function showReset(){document.getElementById(‘confirmModal’).classList.add(‘show’);}
+function closeReset(){document.getElementById(‘confirmModal’).classList.remove(‘show’);}
+function doReset(){
+clearInterval(chronoInt);chronoRunning=false;chronoSec=0;
+TREINOS.forEach(function(t){
+var cargas=state[t.id]?state[t.id].cargas:[];
+var notes=state[t.id]?state[t.id].notes:[];
+state[t.id]={checked:t.exercicios.map(function(){return false;}),cargas:cargas,series:t.exercicios.map(function(){return [];}),notes:notes,open:null};
+});
+saveState();closeReset();buildUI();
+}
+
+loadState();buildUI();
+</script>
+
+</body>
+</html>

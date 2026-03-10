@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -248,471 +249,488 @@
         </div>
     </div>
 
-    <script>
-        var DAYNAMES=['SEG','TER','QUA','QUI','SEX','SAB','DOM'];
-        var D=[
-            {id:'seg',label:'SEG',title:'Segunda-Feira',subtitle:'Peitoral - Ombro - Triceps',exercicios:[
-                {nome:'Supino Reto com Barra',series:'4x8-12',dica:''},
-                {nome:'Supino Inclinado Articulado',series:'4x8-12',dica:''},
-                {nome:'Peck Deck',series:'4x12',dica:''},
-                {nome:'Desenvolvimento Articulado Ombro',series:'4x12',dica:''},
-                {nome:'Elevacao Conjugada Frontal e Lateral',series:'4x12',dica:''},
-                {nome:'Elevacao Lateral com Halteres',series:'3x12',dica:''},
-                {nome:'Triceps Pulley',series:'4x12',dica:''},
-                {nome:'Triceps Corda na Polia',series:'4x12',dica:''},
-                {nome:'Triceps Pulley Invertida',series:'4x12',dica:''}
-            ]},
-            {id:'ter',label:'TER',title:'Terca-Feira',subtitle:'Gluteo 1 - Projecao e Forca',exercicios:[
-                {nome:'Elevacao Pelvica na Maquina',series:'5x6-12',dica:'Segura 2s no topo. Descida controlada.'},
-                {nome:'Agachamento no Smith',series:'4x8',dica:'Pes levemente a frente. 3s descendo. Sobe explodindo.'},
-                {nome:'Hack Machine',series:'4x10',dica:'Pes altos e abertos. Empurra com calcanhar.'},
-                {nome:'Abdutora tronco inclinado',series:'4x20',dica:'Ultima serie faz drop.'},
-                {nome:'Extensao de Quadril 45 graus',series:'3x12',dica:'Foco no gluteo, nao na lombar.'}
-            ]},
-            {id:'qua',label:'QUA',title:'Quarta-Feira',subtitle:'Costas - Biceps',exercicios:[
-                {nome:'Puxada Frente Aberta',series:'4x8/10/12',dica:''},
-                {nome:'Puxada Fechada',series:'4x10',dica:''},
-                {nome:'Remada no Aparelho',series:'4x10/10/10',dica:''},
-                {nome:'Remada Baixa',series:'4x10',dica:''},
-                {nome:'Remada Cavalinho',series:'4x6/8/10',dica:''},
-                {nome:'Rosca Concentrada',series:'4x12',dica:''},
-                {nome:'Rosca Direta',series:'4x12',dica:''},
-                {nome:'Rosca Alternada',series:'4x12',dica:''},
-                {nome:'Rosca Scott',series:'4x12',dica:''},
-                {nome:'Rosca 21',series:'4x7/7/7',dica:''}
-            ]},
-            {id:'qui',label:'QUI',title:'Quinta-Feira',subtitle:'Gluteo 2 - Inferior e Lateral',exercicios:[
-                {nome:'Elevacao Pelvica',series:'4x8',dica:'Menos volume. Pesado.'},
-                {nome:'Stiff Pesado',series:'4x8',dica:'Desce alongando posterior. Nao arredonda lombar.'},
-                {nome:'Leg Press Unilateral',series:'3x10 cada',dica:'Pe alto. Foco no calcanhar.'},
-                {nome:'Agachamento Sumo com Halter',series:'4x10-12',dica:'Desce profundo. Abre o quadril.'},
-                {nome:'Abdutora drop set',series:'3x falha',dica:'Ate queimar. Drop set na ultima.'}
-            ]},
-            {id:'sex',label:'SEX',title:'Sexta-Feira',subtitle:'Full Body',exercicios:[
-                {nome:'Puxada Frente Aberta',series:'4x12',dica:''},
-                {nome:'Remada Cavalinho',series:'4x12',dica:''},
-                {nome:'Supino Inclinado Articulado',series:'4x12',dica:''},
-                {nome:'Peck Deck',series:'4x12',dica:''},
-                {nome:'Desenvolvimento Articulado Ombro',series:'4x12',dica:''},
-                {nome:'Elevacao Conjugada Ombro',series:'4x12',dica:''},
-                {nome:'Rosca Direta',series:'4x12',dica:''},
-                {nome:'Rosca Alternada',series:'4x12',dica:''}
-            ]}
-        ];
+```
+<script>
+    var DAYNAMES=['SEG','TER','QUA','QUI','SEX','SAB','DOM'];
+    var D=[
+        {id:'seg',label:'SEG',title:'Segunda-Feira',subtitle:'Peitoral - Ombro - Triceps',exercicios:[
+            {nome:'Supino Reto com Barra',series:'4x8-12',dica:''},
+            {nome:'Supino Inclinado Articulado',series:'4x8-12',dica:''},
+            {nome:'Peck Deck',series:'4x12',dica:''},
+            {nome:'Desenvolvimento Articulado Ombro',series:'4x12',dica:''},
+            {nome:'Elevacao Conjugada Frontal e Lateral',series:'4x12',dica:''},
+            {nome:'Elevacao Lateral com Halteres',series:'3x12',dica:''},
+            {nome:'Triceps Pulley',series:'4x12',dica:''},
+            {nome:'Triceps Corda na Polia',series:'4x12',dica:''},
+            {nome:'Triceps Pulley Invertida',series:'4x12',dica:''}
+        ]},
+        {id:'ter',label:'TER',title:'Terca-Feira',subtitle:'Gluteo 1 - Projecao e Forca',exercicios:[
+            {nome:'ATIVACAO: Clamshell no chao + Glute Bridge',series:'1x ativacao',dica:'Faz antes de comecar. Clamshell: 20 reps cada lado. Glute Bridge: 15 reps segurando 1s no topo. Isso liga o gluteo antes do peso.'},
+            {nome:'Elevacao Pelvica na Maquina',series:'5x6-12 (piramide)',dica:'Serie 1: 12 reps leve (ativacao). Serie 2: 10 reps (aumenta peso). Serie 3: 8 reps pesado. Serie 4: 8 reps mais pesado. Serie 5: 6-8 reps peso maximo do dia. Segura 2 segundos no topo contraindo forte. Descanso 90-120s.'},
+            {nome:'Agachamento no Smith',series:'4x8',dica:'Pes levemente a frente do corpo. Desce controlando 3 segundos. Sobe empurrando com o calcanhar. Descanso 2 minutos.'},
+            {nome:'Hack Machine',series:'4x10',dica:'Pes altos e abertos na plataforma. Desce profundo sem travar os joelhos no topo. Subida forte e controlada. Sem hack: Leg Press pes altos 4x10. Descanso 90s.'},
+            {nome:'Abdutora (tronco inclinado 30 graus)',series:'4x15-20',dica:'ESSENCIAL: inclina o tronco 30 graus pra frente antes de comecar. Isso ativa o gluteo medio de verdade. Ultima serie faz drop set: vai ate quase falhar, diminui o peso e continua. Descanso 60s.'},
+            {nome:'Kickback com Caneleira no Banco',series:'3x12 cada lado',dica:'Apoia joelhos e maos no banco ou no chao (4 apoios). Chuta a perna pra tras e pra cima. Contrai forte no ponto mais alto. Movimento vem do gluteo, nao da lombar. Faz 12 reps num lado, depois troca. Descanso 60s entre lados.'}
+        ]},
+        {id:'qua',label:'QUA',title:'Quarta-Feira',subtitle:'Costas - Biceps',exercicios:[
+            {nome:'Puxada Frente Aberta',series:'4x8/10/12',dica:''},
+            {nome:'Puxada Fechada',series:'4x10',dica:''},
+            {nome:'Remada no Aparelho',series:'4x10/10/10',dica:''},
+            {nome:'Remada Baixa',series:'4x10',dica:''},
+            {nome:'Remada Cavalinho',series:'4x6/8/10',dica:''},
+            {nome:'Rosca Concentrada',series:'4x12',dica:''},
+            {nome:'Rosca Direta',series:'4x12',dica:''},
+            {nome:'Rosca Alternada',series:'4x12',dica:''},
+            {nome:'Rosca Scott',series:'4x12',dica:''},
+            {nome:'Rosca 21',series:'4x7/7/7',dica:''}
+        ]},
+        {id:'qui',label:'QUI',title:'Quinta-Feira',subtitle:'Gluteo 2 - Inferior e Lateral',exercicios:[
+            {nome:'ATIVACAO: Clamshell no chao + Glute Bridge',series:'1x ativacao',dica:'Faz antes de comecar. Clamshell: 20 reps cada lado. Glute Bridge: 15 reps segurando 1s no topo. Isso liga o gluteo antes do peso.'},
+            {nome:'Elevacao Pelvica na Maquina',series:'4x8',dica:'Pesado desde a primeira serie. Sem aquecimento progressivo hoje, ja entra forte. Segura 2 segundos no topo. Descanso 2 minutos.'},
+            {nome:'Stiff com Halter',series:'4x8',dica:'Desce alongando o posterior, sente o musculo abrir. Subida forte, espreme o gluteo no topo. Nao arredonda a lombar. Descanso 2 minutos.'},
+            {nome:'Leg Press Unilateral',series:'3x10 cada',dica:'Pe alto e levemente aberto na plataforma. Faz todas as reps num lado antes de trocar. Descanso 90s entre lados.'},
+            {nome:'Abducao com Halter em Pe',series:'4x15 cada lado',dica:'Segura num apoio com uma mao, halter leve na outra. Abre a perna pro lado. Movimento controlado, sem balancar o corpo. Segura 1s no topo e desce devagar. Foca na lateral superior do gluteo (gluteo medio). Descanso 60s entre lados.'},
+            {nome:'Abdutora na Maquina',series:'3x15-20',dica:'Tronco inclinado 30 graus pra frente. Ultima serie ate queimar forte. Descanso 60s.'}
+        ]},
+        {id:'sex',label:'SEX',title:'Sexta-Feira',subtitle:'Full Body',exercicios:[
+            {nome:'Puxada Frente Aberta',series:'4x12',dica:''},
+            {nome:'Remada Cavalinho',series:'4x12',dica:''},
+            {nome:'Supino Inclinado Articulado',series:'4x12',dica:''},
+            {nome:'Peck Deck',series:'4x12',dica:''},
+            {nome:'Desenvolvimento Articulado Ombro',series:'4x12',dica:''},
+            {nome:'Elevacao Conjugada Ombro',series:'4x12',dica:''},
+            {nome:'Rosca Direta',series:'4x12',dica:''},
+            {nome:'Rosca Alternada',series:'4x12',dica:''}
+        ]}
+    ];
 
-        var TREINOS=JSON.parse(JSON.stringify(D));
-        var state={},activeDay=TREINOS[0].id;
-        var tInt=null,tSec=0,tTot=0,etTarget=null,lastTap={};
-        var wakeLock=null,audioCtx=null;
-        var alarmInt=null,vibrInt=null,alarmOn=false;
-        var chronoInt=null,chronoSec=0,chronoRunning=false;
+    var TREINOS=JSON.parse(JSON.stringify(D));
+    var state={},activeDay=TREINOS[0].id;
+    var tInt=null,tSec=0,tTot=0,etTarget=null,lastTap={};
+    var wakeLock=null,audioCtx=null;
+    var alarmInt=null,vibrInt=null,alarmOn=false;
+    var chronoInt=null,chronoSec=0,chronoRunning=false;
 
-        function parseSeries(s){var m=s.match(/^(\d+)x/);return m?parseInt(m[1]):4;}
-        function todayStr(){return new Date().toISOString().slice(0,10);}
-        function fmtDate(d){var p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
+    function parseSeries(s){var m=s.match(/^(\d+)x/);return m?parseInt(m[1]):4;}
+    function todayStr(){return new Date().toISOString().slice(0,10);}
+    function fmtDate(d){var p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
 
-        function initWakeLock(){
-            if('wakeLock' in navigator){
-                navigator.wakeLock.request('screen').then(function(l){
-                    wakeLock=l;
-                    document.getElementById('wakeDot').classList.add('on');
-                    l.addEventListener('release',function(){document.getElementById('wakeDot').classList.remove('on');});
-                }).catch(function(){});
-            }
+    var wakeLockActive=false;
+    function initWakeLock(){
+        if(!('wakeLock' in navigator))return;
+        navigator.wakeLock.request('screen').then(function(l){
+            wakeLock=l;
+            wakeLockActive=true;
+            document.getElementById('wakeDot').classList.add('on');
+            l.addEventListener('release',function(){
+                wakeLockActive=false;
+                document.getElementById('wakeDot').classList.remove('on');
+            });
+        }).catch(function(){});
+    }
+    // Reativa wake lock ao voltar pro app e a cada toque (iOS precisa de gesto do usuário)
+    document.addEventListener('visibilitychange',function(){
+        if(document.visibilityState==='visible' && !wakeLockActive) initWakeLock();
+    });
+    document.addEventListener('touchstart',function(){
+        try{getAudio().resume();}catch(e){}
+        if(!wakeLockActive) initWakeLock();
+    });
+    // Tenta ativar no carregamento (funciona no Android; no iOS vai funcionar após o 1o toque)
+    initWakeLock();
+
+    function getAudio(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
+    function beep(freq,dur,vol,type){try{var c=getAudio();if(c.state==='suspended')c.resume();var o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type=type||'sine';o.frequency.value=freq||880;g.gain.setValueAtTime(vol||.5,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+dur);o.start(c.currentTime);o.stop(c.currentTime+dur);}catch(e){}}
+    function playTick(){beep(660,.08,.3,'sine');}
+    function playAlarmOnce(){beep(880,.15,.7,'square');setTimeout(function(){beep(880,.15,.7,'square');},200);setTimeout(function(){beep(1100,.5,.8,'square');},420);}
+    function startAlarm(){alarmOn=true;playAlarmOnce();alarmInt=setInterval(function(){playAlarmOnce();},2500);vibrInt=setInterval(function(){if(navigator.vibrate)navigator.vibrate([400,200,400]);},1200);flashLoop();}
+    function flashLoop(){if(!alarmOn)return;var m=document.getElementById('timerModal');m.classList.add('flash');setTimeout(function(){m.classList.remove('flash');if(alarmOn)setTimeout(flashLoop,900);},250);}
+    function stopAlarm(){alarmOn=false;clearInterval(alarmInt);alarmInt=null;clearInterval(vibrInt);vibrInt=null;if(navigator.vibrate)navigator.vibrate(0);}
+
+
+    function startChrono(){
+        if(chronoRunning)return;
+        chronoRunning=true;
+        chronoInt=setInterval(function(){
+            chronoSec++;
+            updateChronoDisplay();
+        },1000);
+    }
+    function updateChronoDisplay(){
+        var el=document.getElementById('chronoDisplay');
+        if(!el)return;
+        var m=Math.floor(chronoSec/60),s=chronoSec%60;
+        el.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+        el.className='chrono'+(chronoRunning?' running':'');
+    }
+
+    function calcStreak(){
+        var hist={};
+        try{var h=localStorage.getItem('mt8_hist');if(h)hist=JSON.parse(h);}catch(e){}
+        var dates=Object.keys(hist).sort().reverse();
+        if(!dates.length)return 0;
+        var streak=0,cur=new Date();
+        cur.setHours(0,0,0,0);
+        for(var i=0;i<dates.length;i++){
+            var d=new Date(dates[i]);d.setHours(0,0,0,0);
+            var diff=Math.round((cur-d)/(1000*60*60*24));
+            if(diff===i)streak++;
+            else break;
         }
-        document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')initWakeLock();});
-        initWakeLock();
+        return streak;
+    }
+    function updateStreak(){
+        document.getElementById('streakNum').textContent=calcStreak();
+    }
 
-        function getAudio(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
-        function beep(freq,dur,vol,type){try{var c=getAudio();if(c.state==='suspended')c.resume();var o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type=type||'sine';o.frequency.value=freq||880;g.gain.setValueAtTime(vol||.5,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+dur);o.start(c.currentTime);o.stop(c.currentTime+dur);}catch(e){}}
-        function playTick(){beep(660,.08,.3,'sine');}
-        function playAlarmOnce(){beep(880,.15,.7,'square');setTimeout(function(){beep(880,.15,.7,'square');},200);setTimeout(function(){beep(1100,.5,.8,'square');},420);}
-        function startAlarm(){alarmOn=true;playAlarmOnce();alarmInt=setInterval(function(){playAlarmOnce();},2500);vibrInt=setInterval(function(){if(navigator.vibrate)navigator.vibrate([400,200,400]);},1200);flashLoop();}
-        function flashLoop(){if(!alarmOn)return;var m=document.getElementById('timerModal');m.classList.add('flash');setTimeout(function(){m.classList.remove('flash');if(alarmOn)setTimeout(flashLoop,900);},250);}
-        function stopAlarm(){alarmOn=false;clearInterval(alarmInt);alarmInt=null;clearInterval(vibrInt);vibrInt=null;if(navigator.vibrate)navigator.vibrate(0);}
-        document.addEventListener('touchstart',function(){try{getAudio().resume();}catch(e){}},{once:true});
-
-        function startChrono(){
-            if(chronoRunning)return;
-            chronoRunning=true;
-            chronoInt=setInterval(function(){
-                chronoSec++;
-                updateChronoDisplay();
-            },1000);
+    function saveHistCarga(dayId,exIdx,carga){
+        if(!carga)return;
+        var hist={};
+        try{var h=localStorage.getItem('mt8_hist');if(h)hist=JSON.parse(h);}catch(e){}
+        var today=todayStr();
+        if(!hist[today])hist[today]={};
+        var key=dayId+'_'+exIdx;
+        var tObj = TREINOS.find(t => t.id === dayId);
+        hist[today][key]={carga:carga,nome:tObj.exercicios[exIdx].nome,day:dayId};
+        try{localStorage.setItem('mt8_hist',JSON.stringify(hist));}catch(e){}
+        updateStreak();
+    }
+    function getLastCarga(dayId,exIdx){
+        var hist={};
+        try{var h=localStorage.getItem('mt8_hist');if(h)hist=JSON.parse(h);}catch(e){}
+        var dates=Object.keys(hist).sort().reverse();
+        var key=dayId+'_'+exIdx;
+        var today=todayStr();
+        for(var i=0;i<dates.length;i++){
+            if(dates[i]===today)continue;
+            if(hist[dates[i]][key])return hist[dates[i]][key].carga;
         }
-        function updateChronoDisplay(){
-            var el=document.getElementById('chronoDisplay');
-            if(!el)return;
+        return null;
+    }
+
+    function loadState(){
+        try{var s=localStorage.getItem('mt8');if(s){var p=JSON.parse(s);state=p.state||{};if(p.treinos)TREINOS=p.treinos;if(p.activeDay)activeDay=p.activeDay;if(p.chronoSec)chronoSec=p.chronoSec;}}catch(e){state={};}
+        var cargas={};
+        try{var cs=localStorage.getItem('mt8_cargas');if(cs)cargas=JSON.parse(cs);}catch(e){}
+        TREINOS.forEach(function(t){
+            if(!state[t.id])state[t.id]={checked:t.exercicios.map(function(){return false;}),cargas:t.exercicios.map(function(){return '';}),series:t.exercicios.map(function(){return [];}),notes:t.exercicios.map(function(){return '';}),open:null};
+            while(state[t.id].checked.length<t.exercicios.length)state[t.id].checked.push(false);
+            while(state[t.id].series.length<t.exercicios.length)state[t.id].series.push([]);
+            if(!state[t.id].cargas)state[t.id].cargas=t.exercicios.map(function(){return '';});
+            while(state[t.id].cargas.length<t.exercicios.length)state[t.id].cargas.push('');
+            if(!state[t.id].notes)state[t.id].notes=t.exercicios.map(function(){return '';});
+            while(state[t.id].notes.length<t.exercicios.length)state[t.id].notes.push('');
+            if(cargas[t.id])cargas[t.id].forEach(function(v,i){if(v)state[t.id].cargas[i]=v;});
+        });
+    }
+    function saveState(){
+        try{localStorage.setItem('mt8',JSON.stringify({state:state,treinos:TREINOS,activeDay:activeDay,chronoSec:chronoSec}));}catch(e){}
+        var cargas={};
+        TREINOS.forEach(function(t){cargas[t.id]=state[t.id].cargas||[];});
+        try{localStorage.setItem('mt8_cargas',JSON.stringify(cargas));}catch(e){}
+    }
+
+    function handleHeaderTap(type, dayId){
+        var now = Date.now();
+        var key = 'header-'+dayId+'-'+type;
+        if(lastTap[key] && (now - lastTap[key]) < 500){
+            openEditDay(dayId);
+            lastTap[key] = 0;
+        } else {
+            lastTap[key] = now;
+        }
+    }
+
+    function openEditDay(dayId){
+        var t = TREINOS.find(tr => tr.id === dayId);
+        if(!t) return;
+        document.getElementById('editDayTitle').value = t.title;
+        document.getElementById('editDaySub').value = t.subtitle;
+        document.getElementById('editDayModal').setAttribute('data-target-id', dayId);
+        document.getElementById('editDayModal').classList.add('show');
+    }
+
+    function closeEditDay(){
+        document.getElementById('editDayModal').classList.remove('show');
+    }
+
+    function saveDayEdits(){
+        var dayId = document.getElementById('editDayModal').getAttribute('data-target-id');
+        var tIdx = TREINOS.findIndex(tr => tr.id === dayId);
+        if(tIdx < 0) return;
+        
+        var newTitle = document.getElementById('editDayTitle').value.trim();
+        var newSub = document.getElementById('editDaySub').value.trim();
+
+        if(newTitle) TREINOS[tIdx].title = newTitle;
+        TREINOS[tIdx].subtitle = newSub;
+
+        saveState();
+        closeEditDay();
+        buildUI();
+    }
+
+    function buildUI(){
+        var tabs=document.getElementById('tabs'),cont=document.getElementById('content');
+        tabs.innerHTML='';cont.innerHTML='';
+        updateStreak();
+        TREINOS.forEach(function(treino,tidx){
+            var tab=document.createElement('button');
+            tab.className='tab'+(treino.id===activeDay?' active':'');
+            var allDone=state[treino.id].checked.length>0&&state[treino.id].checked.every(function(x){return x;});
+            if(allDone)tab.classList.add('completed');
+            tab.innerHTML=treino.label+'<span class="dot"></span>';
+            tab.onclick=(function(id){return function(){activeDay=id;saveState();buildUI();};})(treino.id);
+            tabs.appendChild(tab);
+
+            var panel=document.createElement('div');
+            panel.className='day-panel'+(treino.id===activeDay?' active':'');
+            var done=state[treino.id].checked.filter(function(x){return x;}).length;
+            var total=treino.exercicios.length;
+            var pct=total?Math.round(done/total*100):0;
             var m=Math.floor(chronoSec/60),s=chronoSec%60;
-            el.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
-            el.className='chrono'+(chronoRunning?' running':'');
-        }
-
-        function calcStreak(){
-            var hist={};
-            try{var h=localStorage.getItem('mt8_hist');if(h)hist=JSON.parse(h);}catch(e){}
-            var dates=Object.keys(hist).sort().reverse();
-            if(!dates.length)return 0;
-            var streak=0,cur=new Date();
-            cur.setHours(0,0,0,0);
-            for(var i=0;i<dates.length;i++){
-                var d=new Date(dates[i]);d.setHours(0,0,0,0);
-                var diff=Math.round((cur-d)/(1000*60*60*24));
-                if(diff===i)streak++;
-                else break;
-            }
-            return streak;
-        }
-        function updateStreak(){
-            document.getElementById('streakNum').textContent=calcStreak();
-        }
-
-        function saveHistCarga(dayId,exIdx,carga){
-            if(!carga)return;
-            var hist={};
-            try{var h=localStorage.getItem('mt8_hist');if(h)hist=JSON.parse(h);}catch(e){}
-            var today=todayStr();
-            if(!hist[today])hist[today]={};
-            var key=dayId+'_'+exIdx;
-            var tObj = TREINOS.find(t => t.id === dayId);
-            hist[today][key]={carga:carga,nome:tObj.exercicios[exIdx].nome,day:dayId};
-            try{localStorage.setItem('mt8_hist',JSON.stringify(hist));}catch(e){}
-            updateStreak();
-        }
-        function getLastCarga(dayId,exIdx){
-            var hist={};
-            try{var h=localStorage.getItem('mt8_hist');if(h)hist=JSON.parse(h);}catch(e){}
-            var dates=Object.keys(hist).sort().reverse();
-            var key=dayId+'_'+exIdx;
-            var today=todayStr();
-            for(var i=0;i<dates.length;i++){
-                if(dates[i]===today)continue;
-                if(hist[dates[i]][key])return hist[dates[i]][key].carga;
-            }
-            return null;
-        }
-
-        function loadState(){
-            try{var s=localStorage.getItem('mt8');if(s){var p=JSON.parse(s);state=p.state||{};if(p.treinos)TREINOS=p.treinos;if(p.activeDay)activeDay=p.activeDay;if(p.chronoSec)chronoSec=p.chronoSec;}}catch(e){state={};}
-            var cargas={};
-            try{var cs=localStorage.getItem('mt8_cargas');if(cs)cargas=JSON.parse(cs);}catch(e){}
-            TREINOS.forEach(function(t){
-                if(!state[t.id])state[t.id]={checked:t.exercicios.map(function(){return false;}),cargas:t.exercicios.map(function(){return '';}),series:t.exercicios.map(function(){return [];}),notes:t.exercicios.map(function(){return '';}),open:null};
-                while(state[t.id].checked.length<t.exercicios.length)state[t.id].checked.push(false);
-                while(state[t.id].series.length<t.exercicios.length)state[t.id].series.push([]);
-                if(!state[t.id].cargas)state[t.id].cargas=t.exercicios.map(function(){return '';});
-                while(state[t.id].cargas.length<t.exercicios.length)state[t.id].cargas.push('');
-                if(!state[t.id].notes)state[t.id].notes=t.exercicios.map(function(){return '';});
-                while(state[t.id].notes.length<t.exercicios.length)state[t.id].notes.push('');
-                if(cargas[t.id])cargas[t.id].forEach(function(v,i){if(v)state[t.id].cargas[i]=v;});
-            });
-        }
-        function saveState(){
-            try{localStorage.setItem('mt8',JSON.stringify({state:state,treinos:TREINOS,activeDay:activeDay,chronoSec:chronoSec}));}catch(e){}
-            var cargas={};
-            TREINOS.forEach(function(t){cargas[t.id]=state[t.id].cargas||[];});
-            try{localStorage.setItem('mt8_cargas',JSON.stringify(cargas));}catch(e){}
-        }
-
-        function handleHeaderTap(type, dayId){
-            var now = Date.now();
-            var key = 'header-'+dayId+'-'+type;
-            if(lastTap[key] && (now - lastTap[key]) < 500){
-                openEditDay(dayId);
-                lastTap[key] = 0;
-            } else {
-                lastTap[key] = now;
-            }
-        }
-
-        function openEditDay(dayId){
-            var t = TREINOS.find(tr => tr.id === dayId);
-            if(!t) return;
-            document.getElementById('editDayTitle').value = t.title;
-            document.getElementById('editDaySub').value = t.subtitle;
-            document.getElementById('editDayModal').setAttribute('data-target-id', dayId);
-            document.getElementById('editDayModal').classList.add('show');
-        }
-
-        function closeEditDay(){
-            document.getElementById('editDayModal').classList.remove('show');
-        }
-
-        function saveDayEdits(){
-            var dayId = document.getElementById('editDayModal').getAttribute('data-target-id');
-            var tIdx = TREINOS.findIndex(tr => tr.id === dayId);
-            if(tIdx < 0) return;
+            var chronoTxt=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
             
-            var newTitle = document.getElementById('editDayTitle').value.trim();
-            var newSub = document.getElementById('editDaySub').value.trim();
-
-            if(newTitle) TREINOS[tIdx].title = newTitle;
-            TREINOS[tIdx].subtitle = newSub;
-
-            saveState();
-            closeEditDay();
-            buildUI();
-        }
-
-        function buildUI(){
-            var tabs=document.getElementById('tabs'),cont=document.getElementById('content');
-            tabs.innerHTML='';cont.innerHTML='';
-            updateStreak();
-            TREINOS.forEach(function(treino,tidx){
-                var tab=document.createElement('button');
-                tab.className='tab'+(treino.id===activeDay?' active':'');
-                var allDone=state[treino.id].checked.length>0&&state[treino.id].checked.every(function(x){return x;});
-                if(allDone)tab.classList.add('completed');
-                tab.innerHTML=treino.label+'<span class="dot"></span>';
-                tab.onclick=(function(id){return function(){activeDay=id;saveState();buildUI();};})(treino.id);
-                tabs.appendChild(tab);
-
-                var panel=document.createElement('div');
-                panel.className='day-panel'+(treino.id===activeDay?' active':'');
-                var done=state[treino.id].checked.filter(function(x){return x;}).length;
-                var total=treino.exercicios.length;
-                var pct=total?Math.round(done/total*100):0;
-                var m=Math.floor(chronoSec/60),s=chronoSec%60;
-                var chronoTxt=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
-                
-                panel.innerHTML=
-                    '<div class="day-header">'+
-                        '<div>' + 
-                            '<div class="day-title" onclick="handleHeaderTap(\'title\',\''+treino.id+'\')">'+treino.title+'</div>' + 
-                            '<div class="day-subtitle" onclick="handleHeaderTap(\'sub\',\''+treino.id+'\')">'+treino.subtitle+'</div>' + 
-                        '</div>'+
-                        '<div id="chronoDisplay" class="chrono'+(chronoRunning?' running':'')+'">'+chronoTxt+'</div>'+
+            panel.innerHTML=
+                '<div class="day-header">'+
+                    '<div>' + 
+                        '<div class="day-title" onclick="handleHeaderTap(\'title\',\''+treino.id+'\')">'+treino.title+'</div>' + 
+                        '<div class="day-subtitle" onclick="handleHeaderTap(\'sub\',\''+treino.id+'\')">'+treino.subtitle+'</div>' + 
                     '</div>'+
-                    '<div class="progress-wrap"><div class="progress-bar" style="width:'+pct+'%"></div></div>'+
-                    '<div class="progress-label">'+done+'/'+total+' - '+pct+'%</div>';
+                    '<div id="chronoDisplay" class="chrono'+(chronoRunning?' running':'')+'">'+chronoTxt+'</div>'+
+                '</div>'+
+                '<div class="progress-wrap"><div class="progress-bar" style="width:'+pct+'%"></div></div>'+
+                '<div class="progress-label">'+done+'/'+total+' - '+pct+'%</div>';
 
-                treino.exercicios.forEach(function(ex,i){
-                    var isDone=state[treino.id].checked[i];
-                    var isOpen=state[treino.id].open===i;
-                    var carga=state[treino.id].cargas[i]||'';
-                    var note=state[treino.id].notes[i]||'';
-                    var seriesDone=state[treino.id].series[i]||[];
-                    var numSeries=parseSeries(ex.series);
-                    var lastCarga=getLastCarga(treino.id,i);
+            treino.exercicios.forEach(function(ex,i){
+                var isDone=state[treino.id].checked[i];
+                var isOpen=state[treino.id].open===i;
+                var carga=state[treino.id].cargas[i]||'';
+                var note=state[treino.id].notes[i]||'';
+                var seriesDone=state[treino.id].series[i]||[];
+                var numSeries=parseSeries(ex.series);
+                var lastCarga=getLastCarga(treino.id,i);
 
-                    var serieBtns='<div class="series-row">';
-                    for(var s2=0;s2<numSeries;s2++){
-                        var sd=seriesDone.indexOf(s2)>=0;
-                        serieBtns+='<button class="serie-btn'+(sd?' done':'')+'" onclick="toggleSerie(event,\''+treino.id+'\','+i+','+s2+','+numSeries+')">S'+(s2+1)+'</button>';
-                    }
-                    serieBtns+='</div>';
+                var serieBtns='<div class="series-row">';
+                for(var s2=0;s2<numSeries;s2++){
+                    var sd=seriesDone.indexOf(s2)>=0;
+                    serieBtns+='<button class="serie-btn'+(sd?' done':'')+'" onclick="toggleSerie(event,\''+treino.id+'\','+i+','+s2+','+numSeries+')">S'+(s2+1)+'</button>';
+                }
+                serieBtns+='</div>';
 
-                    var tip=ex.dica?('<div class="ex-tip">'+ex.dica+'</div>'):'';
-                    var card=document.createElement('div');
-                    card.className='exercise-card'+(isDone?' done':'')+(isOpen?' open':'');
-                    
-                    card.innerHTML=
-                        '<div class="exercise-main" onclick="cc(\''+treino.id+'\','+i+',event)">'+
-                            '<div class="ex-number">'+(i+1)+'</div>'+
-                            '<div class="ex-info"><div class="ex-name">'+ex.nome+'</div><div class="ex-sets">'+ex.series+'</div></div>'+
-                            '<div class="ex-right">'+
-                                '<button class="edit-btn" onclick="eb(event,'+tidx+','+i+')">&#9998;</button>'+
-                                '<div class="ex-check" onclick="ck(event,\''+treino.id+'\','+i+')">'+(isDone?'&#10003;':'')+'</div>'+
-                            '</div>'+
+                var tip=ex.dica?('<div class="ex-tip">'+ex.dica+'</div>'):'';
+                var card=document.createElement('div');
+                card.className='exercise-card'+(isDone?' done':'')+(isOpen?' open':'');
+                
+                card.innerHTML=
+                    '<div class="exercise-main" onclick="cc(\''+treino.id+'\','+i+',event)">'+
+                        '<div class="ex-number">'+(i+1)+'</div>'+
+                        '<div class="ex-info"><div class="ex-name">'+ex.nome+'</div><div class="ex-sets">'+ex.series+'</div></div>'+
+                        '<div class="ex-right">'+
+                            '<button class="edit-btn" onclick="eb(event,'+tidx+','+i+')">&#9998;</button>'+
+                            '<div class="ex-check" onclick="ck(event,\''+treino.id+'\','+i+')">'+(isDone?'&#10003;':'')+'</div>'+
                         '</div>'+
-                        '<div class="exercise-expand"><div class="expand-inner">'+
-                            serieBtns+
-                            '<div class="expand-row">'+
-                                '<div class="carga-wrap">'+
-                                    '<span class="carga-label">Carga</span>'+
-                                    '<input class="carga-input" type="number" inputmode="decimal" placeholder="0" value="'+carga+'" onchange="sc(\''+treino.id+'\','+i+',this.value)" onclick="event.stopPropagation()">'+
-                                    '<span class="carga-unit">kg</span>'+
-                                    (lastCarga?'<span class="carga-hist">ant: '+lastCarga+'kg</span>':'')+ 
-                                '</div>'+
-                                '<button class="timer-btn" onclick="startTimer(event,'+i+','+tidx+')">Timer 60s</button>'+
+                    '</div>'+
+                    '<div class="exercise-expand"><div class="expand-inner">'+
+                        serieBtns+
+                        '<div class="expand-row">'+
+                            '<div class="carga-wrap">'+
+                                '<span class="carga-label">Carga</span>'+
+                                '<input class="carga-input" type="number" inputmode="decimal" placeholder="0" value="'+carga+'" onchange="sc(\''+treino.id+'\','+i+',this.value)" onclick="event.stopPropagation()">'+
+                                '<span class="carga-unit">kg</span>'+
+                                (lastCarga?'<span class="carga-hist">ant: '+lastCarga+'kg</span>':'')+ 
                             '</div>'+
-                            '<div class="ex-note-wrap">'+
-                                '<textarea class="ex-note" placeholder="Observacao..." onclick="event.stopPropagation()" onchange="saveNote(\''+treino.id+'\','+i+',this.value)">'+note+'</textarea>'+
-                            '</div>'+
-                            tip+
-                        '</div></div>';
-                    panel.appendChild(card);
-                });
-
-                var addBtn=document.createElement('button');
-                addBtn.className='btn-add-ex';
-                addBtn.innerHTML='+ Adicionar exercicio';
-                addBtn.onclick=(function(id){return function(){openAddEx(id);};})(treino.id);
-                panel.appendChild(addBtn);
-                cont.appendChild(panel);
+                            '<button class="timer-btn" onclick="startTimer(event,'+i+','+tidx+')">Timer 60s</button>'+
+                        '</div>'+
+                        '<div class="ex-note-wrap">'+
+                            '<textarea class="ex-note" placeholder="Observacao..." onclick="event.stopPropagation()" onchange="saveNote(\''+treino.id+'\','+i+',this.value)">'+note+'</textarea>'+
+                        '</div>'+
+                        tip+
+                    '</div></div>';
+                panel.appendChild(card);
             });
 
-            var anyDone=false;
-            TREINOS.forEach(function(t){if(state[t.id].checked.some(function(x){return x;}))anyDone=true;});
-            if(anyDone&&!chronoRunning)startChrono();
+            var addBtn=document.createElement('button');
+            addBtn.className='btn-add-ex';
+            addBtn.innerHTML='+ Adicionar exercicio';
+            addBtn.onclick=(function(id){return function(){openAddEx(id);};})(treino.id);
+            panel.appendChild(addBtn);
+            cont.appendChild(panel);
+        });
+
+        var anyDone=false;
+        TREINOS.forEach(function(t){if(state[t.id].checked.some(function(x){return x;}))anyDone=true;});
+        if(anyDone&&!chronoRunning)startChrono();
+    }
+
+    function toggleSerie(e,dayId,exIdx,serieIdx,total){
+        e.stopPropagation();
+        if(!chronoRunning)startChrono();
+        var arr=state[dayId].series[exIdx]||[];
+        var pos=arr.indexOf(serieIdx);
+        if(pos>=0)arr.splice(pos,1);else arr.push(serieIdx);
+        state[dayId].series[exIdx]=arr;
+        if(arr.length>=total){
+            state[dayId].checked[exIdx]=true;
+            saveHistCarga(dayId,exIdx,state[dayId].cargas[exIdx]);
+            checkTreinoCompleto(dayId);
+        } else {
+            state[dayId].checked[exIdx]=false;
         }
+        saveState();buildUI();
+    }
 
-        function toggleSerie(e,dayId,exIdx,serieIdx,total){
-            e.stopPropagation();
-            if(!chronoRunning)startChrono();
-            var arr=state[dayId].series[exIdx]||[];
-            var pos=arr.indexOf(serieIdx);
-            if(pos>=0)arr.splice(pos,1);else arr.push(serieIdx);
-            state[dayId].series[exIdx]=arr;
-            if(arr.length>=total){
-                state[dayId].checked[exIdx]=true;
-                saveHistCarga(dayId,exIdx,state[dayId].cargas[exIdx]);
-                checkTreinoCompleto(dayId);
-            } else {
-                state[dayId].checked[exIdx]=false;
-            }
-            saveState();buildUI();
+    function checkTreinoCompleto(dayId){
+        var t = TREINOS.find(tr => tr.id === dayId);
+        if(!t)return;
+        if(state[dayId].checked.length===t.exercicios.length && state[dayId].checked.every(function(x){return x;})){
+            setTimeout(function(){showResumo(dayId);},400);
         }
+    }
 
-        function checkTreinoCompleto(dayId){
-            var t = TREINOS.find(tr => tr.id === dayId);
-            if(!t)return;
-            if(state[dayId].checked.length===t.exercicios.length && state[dayId].checked.every(function(x){return x;})){
-                setTimeout(function(){showResumo(dayId);},400);
-            }
+    function cc(d,i,e){if(e.target.closest('.ex-check')||e.target.closest('.edit-btn')||e.target.closest('.serie-btn')||e.target.closest('.ex-note')||e.target.closest('.carga-input'))return;state[d].open=(state[d].open===i)?null:i;saveState();buildUI();}
+    function ck(e,d,i){e.stopPropagation();state[d].checked[i]=!state[d].checked[i];if(!state[d].checked[i])state[d].series[i]=[];if(state[d].checked[i]){saveHistCarga(d,i,state[d].cargas[i]);checkTreinoCompleto(d);}if(state[d].checked[i]&&state[d].open===i)state[d].open=null;saveState();buildUI();}
+    function sc(d,i,v){state[d].cargas[i]=v;saveState();}
+    function saveNote(d,i,v){state[d].notes[i]=v;saveState();}
+
+    function eb(e,di,ei){e.stopPropagation();var k=di+'-'+ei,now=Date.now();if(lastTap[k]&&(now-lastTap[k])<500){openEdit(di,ei);lastTap[k]=0;}else{lastTap[k]=now;}}
+    function openEdit(di,ei){etTarget={di:di,ei:ei};var ex=TREINOS[di].exercicios[ei];document.getElementById('editName').value=ex.nome;document.getElementById('editSets').value=ex.series;document.getElementById('editModal').classList.add('show');setTimeout(function(){document.getElementById('editName').focus();},150);}
+    function closeEdit(){document.getElementById('editModal').classList.remove('show');etTarget=null;}
+    function saveEdit(){if(!etTarget)return;var n=document.getElementById('editName').value.trim(),s=document.getElementById('editSets').value.trim();if(!n)return;TREINOS[etTarget.di].exercicios[etTarget.ei].nome=n;if(s)TREINOS[etTarget.di].exercicios[etTarget.ei].series=s;saveState();closeEdit();buildUI();}
+
+    var addExDayId=null;
+    function openAddEx(dayId){addExDayId=dayId;document.getElementById('addExName').value='';document.getElementById('addExSets').value='';document.getElementById('addExModal').classList.add('show');setTimeout(function(){document.getElementById('addExName').focus();},150);}
+    function closeAddEx(){document.getElementById('addExModal').classList.remove('show');addExDayId=null;}
+    function saveAddEx(){
+        var n=document.getElementById('addExName').value.trim(),s=document.getElementById('addExSets').value.trim()||'4x12';
+        if(!n||!addExDayId)return;
+        var tidx = TREINOS.findIndex(t => t.id === addExDayId);
+        if(tidx<0)return;
+        TREINOS[tidx].exercicios.push({nome:n,series:s,dica:''});
+        state[addExDayId].checked.push(false);state[addExDayId].cargas.push('');state[addExDayId].series.push([]);state[addExDayId].notes.push('');
+        saveState();closeAddEx();buildUI();
+    }
+
+    function addDay(){
+        var used=TREINOS.map(function(t){return t.label;});
+        var next=(function(){for(var _i=0;_i<DAYNAMES.length;_i++){if(used.indexOf(DAYNAMES[_i])<0)return DAYNAMES[_i];}return null;})()||('DIA'+(TREINOS.length+1));
+        document.getElementById('addDayName').value=next;document.getElementById('addDayDesc').value='';
+        document.getElementById('addDayModal').classList.add('show');setTimeout(function(){document.getElementById('addDayDesc').focus();},150);
+    }
+    function closeAddDay(){document.getElementById('addDayModal').classList.remove('show');}
+    function saveAddDay(){
+        var label=document.getElementById('addDayName').value.trim().toUpperCase()||('DIA'+(TREINOS.length+1));
+        var desc=document.getElementById('addDayDesc').value.trim()||'Treino';
+        var titles={SEG:'Segunda-Feira',TER:'Terca-Feira',QUA:'Quarta-Feira',QUI:'Quinta-Feira',SEX:'Sexta-Feira',SAB:'Sabado',DOM:'Domingo'};
+        var id='day_'+Date.now();
+        TREINOS.push({id:id,label:label,title:titles[label]||label,subtitle:desc,exercicios:[]});
+        state[id]={checked:[],cargas:[],series:[],notes:[],open:null};
+        activeDay=id;saveState();closeAddDay();buildUI();
+    }
+
+    function launchConfetti(){
+        var wrap=document.getElementById('confettiWrap');
+        wrap.innerHTML='';
+        var colors=['#f7941d','#ffba08','#2ecc71','#748ffc','#e74c3c','#fff'];
+        for(var i=0;i<80;i++){
+            var p=document.createElement('div');
+            p.className='confetti-piece';
+            p.style.left=Math.random()*100+'vw';
+            p.style.background=colors[Math.floor(Math.random()*colors.length)];
+            p.style.width=(8+Math.random()*8)+'px';
+            p.style.height=(8+Math.random()*8)+'px';
+            p.style.animationDuration=(1.5+Math.random()*2)+'s';
+            p.style.animationDelay=(Math.random()*.5)+'s';
+            wrap.appendChild(p);
         }
+        setTimeout(function(){wrap.innerHTML='';},4000);
+    }
 
-        function cc(d,i,e){if(e.target.closest('.ex-check')||e.target.closest('.edit-btn')||e.target.closest('.serie-btn')||e.target.closest('.ex-note')||e.target.closest('.carga-input'))return;state[d].open=(state[d].open===i)?null:i;saveState();buildUI();}
-        function ck(e,d,i){e.stopPropagation();state[d].checked[i]=!state[d].checked[i];if(!state[d].checked[i])state[d].series[i]=[];if(state[d].checked[i]){saveHistCarga(d,i,state[d].cargas[i]);checkTreinoCompleto(d);}if(state[d].checked[i]&&state[d].open===i)state[d].open=null;saveState();buildUI();}
-        function sc(d,i,v){state[d].cargas[i]=v;saveState();}
-        function saveNote(d,i,v){state[d].notes[i]=v;saveState();}
+    function showResumo(dayId){
+        launchConfetti();
+        var t = TREINOS.find(tr => tr.id === dayId);
+        var totalSeries=0;
+        t.exercicios.forEach(function(ex,i){totalSeries+=parseSeries(ex.series);});
+        var totalCarga=0;
+        state[dayId].cargas.forEach(function(c,i){
+            if(c)totalCarga+=parseFloat(c)*parseSeries(t.exercicios[i].series);
+        });
+        var m=Math.floor(chronoSec/60);
+        document.getElementById('resumoSub').textContent=t.title;
+        document.getElementById('rSeries').textContent=totalSeries;
+        document.getElementById('rTempo').textContent=m+'min';
+        document.getElementById('rExercicios').textContent=t.exercicios.length;
+        document.getElementById('rCarga').textContent=Math.round(totalCarga)+'kg';
+        document.getElementById('resumoOverlay').classList.add('show');
+        beep(880,.15,.6,'square');setTimeout(function(){beep(1100,.3,.7,'square');},200);
+    }
+    function closeResumo(){document.getElementById('resumoOverlay').classList.remove('show');}
 
-        function eb(e,di,ei){e.stopPropagation();var k=di+'-'+ei,now=Date.now();if(lastTap[k]&&(now-lastTap[k])<500){openEdit(di,ei);lastTap[k]=0;}else{lastTap[k]=now;}}
-        function openEdit(di,ei){etTarget={di:di,ei:ei};var ex=TREINOS[di].exercicios[ei];document.getElementById('editName').value=ex.nome;document.getElementById('editSets').value=ex.series;document.getElementById('editModal').classList.add('show');setTimeout(function(){document.getElementById('editName').focus();},150);}
-        function closeEdit(){document.getElementById('editModal').classList.remove('show');etTarget=null;}
-        function saveEdit(){if(!etTarget)return;var n=document.getElementById('editName').value.trim(),s=document.getElementById('editSets').value.trim();if(!n)return;TREINOS[etTarget.di].exercicios[etTarget.ei].nome=n;if(s)TREINOS[etTarget.di].exercicios[etTarget.ei].series=s;saveState();closeEdit();buildUI();}
-
-        var addExDayId=null;
-        function openAddEx(dayId){addExDayId=dayId;document.getElementById('addExName').value='';document.getElementById('addExSets').value='';document.getElementById('addExModal').classList.add('show');setTimeout(function(){document.getElementById('addExName').focus();},150);}
-        function closeAddEx(){document.getElementById('addExModal').classList.remove('show');addExDayId=null;}
-        function saveAddEx(){
-            var n=document.getElementById('addExName').value.trim(),s=document.getElementById('addExSets').value.trim()||'4x12';
-            if(!n||!addExDayId)return;
-            var tidx = TREINOS.findIndex(t => t.id === addExDayId);
-            if(tidx<0)return;
-            TREINOS[tidx].exercicios.push({nome:n,series:s,dica:''});
-            state[addExDayId].checked.push(false);state[addExDayId].cargas.push('');state[addExDayId].series.push([]);state[addExDayId].notes.push('');
-            saveState();closeAddEx();buildUI();
-        }
-
-        function addDay(){
-            var used=TREINOS.map(function(t){return t.label;});
-            var next=(function(){for(var _i=0;_i<DAYNAMES.length;_i++){if(used.indexOf(DAYNAMES[_i])<0)return DAYNAMES[_i];}return null;})()||('DIA'+(TREINOS.length+1));
-            document.getElementById('addDayName').value=next;document.getElementById('addDayDesc').value='';
-            document.getElementById('addDayModal').classList.add('show');setTimeout(function(){document.getElementById('addDayDesc').focus();},150);
-        }
-        function closeAddDay(){document.getElementById('addDayModal').classList.remove('show');}
-        function saveAddDay(){
-            var label=document.getElementById('addDayName').value.trim().toUpperCase()||('DIA'+(TREINOS.length+1));
-            var desc=document.getElementById('addDayDesc').value.trim()||'Treino';
-            var titles={SEG:'Segunda-Feira',TER:'Terca-Feira',QUA:'Quarta-Feira',QUI:'Quinta-Feira',SEX:'Sexta-Feira',SAB:'Sabado',DOM:'Domingo'};
-            var id='day_'+Date.now();
-            TREINOS.push({id:id,label:label,title:titles[label]||label,subtitle:desc,exercicios:[]});
-            state[id]={checked:[],cargas:[],series:[],notes:[],open:null};
-            activeDay=id;saveState();closeAddDay();buildUI();
-        }
-
-        function launchConfetti(){
-            var wrap=document.getElementById('confettiWrap');
-            wrap.innerHTML='';
-            var colors=['#f7941d','#ffba08','#2ecc71','#748ffc','#e74c3c','#fff'];
-            for(var i=0;i<80;i++){
-                var p=document.createElement('div');
-                p.className='confetti-piece';
-                p.style.left=Math.random()*100+'vw';
-                p.style.background=colors[Math.floor(Math.random()*colors.length)];
-                p.style.width=(8+Math.random()*8)+'px';
-                p.style.height=(8+Math.random()*8)+'px';
-                p.style.animationDuration=(1.5+Math.random()*2)+'s';
-                p.style.animationDelay=(Math.random()*.5)+'s';
-                wrap.appendChild(p);
-            }
-            setTimeout(function(){wrap.innerHTML='';},4000);
-        }
-
-        function showResumo(dayId){
-            launchConfetti();
-            var t = TREINOS.find(tr => tr.id === dayId);
-            var totalSeries=0;
-            t.exercicios.forEach(function(ex,i){totalSeries+=parseSeries(ex.series);});
-            var totalCarga=0;
-            state[dayId].cargas.forEach(function(c,i){
-                if(c)totalCarga+=parseFloat(c)*parseSeries(t.exercicios[i].series);
+    function showHist(){
+        var hist={};
+        try{var h=localStorage.getItem('mt8_hist');if(h)hist=JSON.parse(h);}catch(e){}
+        var body=document.getElementById('histBody');
+        var dates=Object.keys(hist).sort().reverse();
+        if(!dates.length){body.innerHTML='<div class="hist-empty">Nenhum historico ainda.<br>Complete exercicios para registrar.</div>';document.getElementById('histOverlay').classList.add('show');return;}
+        var html='';
+        dates.forEach(function(d){
+            html+='<div class="hist-day-title">'+fmtDate(d)+'</div>';
+            var items=hist[d];
+            Object.keys(items).forEach(function(k){
+                var it=items[k];
+                html+='<div class="hist-item"><div><div class="hist-name">'+it.nome+'</div></div><div class="hist-carga">'+it.carga+'kg</div></div>';
             });
-            var m=Math.floor(chronoSec/60);
-            document.getElementById('resumoSub').textContent=t.title;
-            document.getElementById('rSeries').textContent=totalSeries;
-            document.getElementById('rTempo').textContent=m+'min';
-            document.getElementById('rExercicios').textContent=t.exercicios.length;
-            document.getElementById('rCarga').textContent=Math.round(totalCarga)+'kg';
-            document.getElementById('resumoOverlay').classList.add('show');
-            beep(880,.15,.6,'square');setTimeout(function(){beep(1100,.3,.7,'square');},200);
-        }
-        function closeResumo(){document.getElementById('resumoOverlay').classList.remove('show');}
+        });
+        body.innerHTML=html;
+        document.getElementById('histOverlay').classList.add('show');
+    }
+    function closeHist(){document.getElementById('histOverlay').classList.remove('show');}
 
-        function showHist(){
-            var hist={};
-            try{var h=localStorage.getItem('mt8_hist');if(h)hist=JSON.parse(h);}catch(e){}
-            var body=document.getElementById('histBody');
-            var dates=Object.keys(hist).sort().reverse();
-            if(!dates.length){body.innerHTML='<div class="hist-empty">Nenhum historico ainda.<br>Complete exercicios para registrar.</div>';document.getElementById('histOverlay').classList.add('show');return;}
-            var html='';
-            dates.forEach(function(d){
-                html+='<div class="hist-day-title">'+fmtDate(d)+'</div>';
-                var items=hist[d];
-                Object.keys(items).forEach(function(k){
-                    var it=items[k];
-                    html+='<div class="hist-item"><div><div class="hist-name">'+it.nome+'</div></div><div class="hist-carga">'+it.carga+'kg</div></div>';
-                });
-            });
-            body.innerHTML=html;
-            document.getElementById('histOverlay').classList.add('show');
-        }
-        function closeHist(){document.getElementById('histOverlay').classList.remove('show');}
+    function startTimer(e,i,di){
+        e.stopPropagation();stopAlarm();
+        try{getAudio().resume();}catch(ex){}
+        var nm=TREINOS[di].exercicios[i].nome;
+        tSec=60;tTot=60;
+        document.getElementById('timerExName').textContent=nm;
+        updateTD();document.getElementById('timerModal').classList.add('show');
+        clearInterval(tInt);
+        tInt=setInterval(function(){
+            tSec--;
+            if(tSec<=0){tSec=0;updateTD();clearInterval(tInt);startAlarm();}
+            else{if(tSec<=10){playTick();if(navigator.vibrate)navigator.vibrate(40);}updateTD();}
+        },1000);
+    }
+    function updateTD(){
+        var el=document.getElementById('timerDisplay'),bar=document.getElementById('timerProgressBar');
+        el.textContent=tSec===0?'PRONTO':tSec;
+        el.className='timer-big'+(tSec===0?' done-time':tSec<=10?' urgent':'');
+        bar.style.width=(tTot>0?(tSec/tTot*100):0)+'%';
+        bar.style.background=tSec<=10&&tSec>0?'#e74c3c':'var(--orange)';
+    }
+    function addTime(s){
+        stopAlarm();tSec+=s;tTot+=s;
+        clearInterval(tInt);
+        tInt=setInterval(function(){tSec--;if(tSec<=0){tSec=0;updateTD();clearInterval(tInt);startAlarm();}else{if(tSec<=10){playTick();if(navigator.vibrate)navigator.vibrate(40);}updateTD();}},1000);
+        updateTD();
+    }
+    function stopTimer(){stopAlarm();clearInterval(tInt);tSec=0;updateTD();document.getElementById('timerModal').classList.remove('show');}
+    function closeTimer(){stopAlarm();clearInterval(tInt);document.getElementById('timerModal').classList.remove('show');}
 
-        function startTimer(e,i,di){
-            e.stopPropagation();stopAlarm();
-            try{getAudio().resume();}catch(ex){}
-            var nm=TREINOS[di].exercicios[i].nome;
-            tSec=60;tTot=60;
-            document.getElementById('timerExName').textContent=nm;
-            updateTD();document.getElementById('timerModal').classList.add('show');
-            clearInterval(tInt);
-            tInt=setInterval(function(){
-                tSec--;
-                if(tSec<=0){tSec=0;updateTD();clearInterval(tInt);startAlarm();}
-                else{if(tSec<=10){playTick();if(navigator.vibrate)navigator.vibrate(40);}updateTD();}
-            },1000);
-        }
-        function updateTD(){
-            var el=document.getElementById('timerDisplay'),bar=document.getElementById('timerProgressBar');
-            el.textContent=tSec===0?'PRONTO':tSec;
-            el.className='timer-big'+(tSec===0?' done-time':tSec<=10?' urgent':'');
-            bar.style.width=(tTot>0?(tSec/tTot*100):0)+'%';
-            bar.style.background=tSec<=10&&tSec>0?'#e74c3c':'var(--orange)';
-        }
-        function addTime(s){
-            stopAlarm();tSec+=s;tTot+=s;
-            clearInterval(tInt);
-            tInt=setInterval(function(){tSec--;if(tSec<=0){tSec=0;updateTD();clearInterval(tInt);startAlarm();}else{if(tSec<=10){playTick();if(navigator.vibrate)navigator.vibrate(40);}updateTD();}},1000);
-            updateTD();
-        }
-        function stopTimer(){stopAlarm();clearInterval(tInt);tSec=0;updateTD();document.getElementById('timerModal').classList.remove('show');}
-        function closeTimer(){stopAlarm();clearInterval(tInt);document.getElementById('timerModal').classList.remove('show');}
+    function showReset(){document.getElementById('confirmModal').classList.add('show');}
+    function closeReset(){document.getElementById('confirmModal').classList.remove('show');}
+    function doReset(){
+        clearInterval(chronoInt);chronoRunning=false;chronoSec=0;
+        TREINOS.forEach(function(t){
+            var cargas=state[t.id]?state[t.id].cargas:[];
+            var notes=state[t.id]?state[t.id].notes:[];
+            state[t.id]={checked:t.exercicios.map(function(){return false;}),cargas:cargas,series:t.exercicios.map(function(){return [];}),notes:notes,open:null};
+        });
+        saveState();closeReset();buildUI();
+    }
 
-        function showReset(){document.getElementById('confirmModal').classList.add('show');}
-        function closeReset(){document.getElementById('confirmModal').classList.remove('show');}
-        function doReset(){
-            clearInterval(chronoInt);chronoRunning=false;chronoSec=0;
-            TREINOS.forEach(function(t){
-                var cargas=state[t.id]?state[t.id].cargas:[];
-                var notes=state[t.id]?state[t.id].notes:[];
-                state[t.id]={checked:t.exercicios.map(function(){return false;}),cargas:cargas,series:t.exercicios.map(function(){return [];}),notes:notes,open:null};
-            });
-            saveState();closeReset();buildUI();
-        }
+    loadState();buildUI();
+</script>
+```
 
-        loadState();buildUI();
-    </script>
 </body>
 </html>

@@ -397,7 +397,7 @@
 
     var TREINOS=JSON.parse(JSON.stringify(D));
     var state={},activeDay=TREINOS[0].id;
-    var tInt=null,tSec=0,tTot=0,etTarget=null,lastTap={};
+    var tInt=null,tSec=0,tTot=0,timerRunning=false,etTarget=null,lastTap={};
     var wakeLock=null,audioCtx=null;
     var alarmInt=null,vibrInt=null,alarmOn=false;
     var chronoInt=null,chronoSec=0,chronoRunning=false;
@@ -433,14 +433,15 @@
                 // Atualiza crono do treino
                 if(chronoRunning) chronoSec+=elapsed;
                 // Atualiza timer de descanso se estiver rodando
-                if(tInt){
+                if(timerRunning){
                     clearInterval(tInt);
                     tSec=tSec-elapsed;
                     if(tSec<=0){
                         tSec=0;updateTD();startAlarm();
                     } else {
                         updateTD();
-                        tInt=setInterval(function(){tSec--;if(tSec<=0){tSec=0;updateTD();clearInterval(tInt);startAlarm();}else{if(tSec<=10){playTick();if(navigator.vibrate)navigator.vibrate(40);}updateTD();}},1000);
+                        timerRunning=true;
+                        tInt=setInterval(function(){tSec--;if(tSec<=0){tSec=0;updateTD();clearInterval(tInt);tInt=null;timerRunning=false;startAlarm();}else{if(tSec<=10){playTick();if(navigator.vibrate)navigator.vibrate(40);}updateTD();}},1000);
                     }
                 }
             }
@@ -803,8 +804,9 @@
         e.target.classList.add('active');
         tSec=sec;tTot=sec;
         clearInterval(tInt);
+        timerRunning=true;
         updateTD();
-        tInt=setInterval(function(){tSec--;if(tSec<=0){tSec=0;updateTD();clearInterval(tInt);startAlarm();}else{if(tSec<=10){playTick();if(navigator.vibrate)navigator.vibrate(40);}updateTD();}},1000);
+        tInt=setInterval(function(){tSec--;if(tSec<=0){tSec=0;updateTD();clearInterval(tInt);tInt=null;timerRunning=false;startAlarm();}else{if(tSec<=10){playTick();if(navigator.vibrate)navigator.vibrate(40);}updateTD();}},1000);
     }
     function handleTimerBoxClick(e){
         if(timerMinimized){e.stopPropagation();maximizeTimer();}
@@ -836,7 +838,8 @@
         m.classList.add('show');
         timerMinimized=false;
         clearInterval(tInt);
-        tInt=setInterval(function(){tSec--;if(tSec<=0){tSec=0;updateTD();clearInterval(tInt);startAlarm();}else{if(tSec<=10){playTick();if(navigator.vibrate)navigator.vibrate(40);}updateTD();}},1000);
+        timerRunning=true;
+        tInt=setInterval(function(){tSec--;if(tSec<=0){tSec=0;updateTD();clearInterval(tInt);tInt=null;timerRunning=false;startAlarm();}else{if(tSec<=10){playTick();if(navigator.vibrate)navigator.vibrate(40);}updateTD();}},1000);
     }
     function updateTD(){
         var el=document.getElementById('timerDisplay'),bar=document.getElementById('timerProgressBar');
@@ -848,11 +851,12 @@
     function addTime(s){
         stopAlarm();tSec=Math.max(1,tSec+s);tTot=Math.max(1,tTot+s);
         clearInterval(tInt);
-        tInt=setInterval(function(){tSec--;if(tSec<=0){tSec=0;updateTD();clearInterval(tInt);startAlarm();}else{if(tSec<=10){playTick();if(navigator.vibrate)navigator.vibrate(40);}updateTD();}},1000);
+        timerRunning=true;
+        tInt=setInterval(function(){tSec--;if(tSec<=0){tSec=0;updateTD();clearInterval(tInt);tInt=null;timerRunning=false;startAlarm();}else{if(tSec<=10){playTick();if(navigator.vibrate)navigator.vibrate(40);}updateTD();}},1000);
         updateTD();
     }
-    function stopTimer(){stopAlarm();clearInterval(tInt);tSec=0;updateTD();var m=document.getElementById('timerModal');m.classList.remove('show');m.classList.remove('minimized');timerMinimized=false;}
-    function closeTimer(){stopAlarm();clearInterval(tInt);var m=document.getElementById('timerModal');m.classList.remove('show');m.classList.remove('minimized');timerMinimized=false;}
+    function stopTimer(){stopAlarm();clearInterval(tInt);tInt=null;timerRunning=false;tSec=0;updateTD();var m=document.getElementById('timerModal');m.classList.remove('show');m.classList.remove('minimized');timerMinimized=false;}
+    function closeTimer(){stopAlarm();clearInterval(tInt);tInt=null;timerRunning=false;var m=document.getElementById('timerModal');m.classList.remove('show');m.classList.remove('minimized');timerMinimized=false;}
 
     function launchConfetti(){
         var wrap=document.getElementById('confettiWrap');wrap.innerHTML='';
@@ -909,7 +913,7 @@
 
     function showReset(){document.getElementById('confirmModal').classList.add('show');}
     function closeReset(){document.getElementById('confirmModal').classList.remove('show');}
-    function doReset(){
+    function doReset(){stopTimer();stopAlarm();
         clearInterval(chronoInt);chronoRunning=false;chronoSec=0;
         TREINOS.forEach(function(t){
             var cargas=state[t.id]?state[t.id].cargas:[];var notes=state[t.id]?state[t.id].notes:[];

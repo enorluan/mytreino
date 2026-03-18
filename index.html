@@ -47,11 +47,7 @@
     .exercise-card.pressing{border-color:var(--red) !important;background:#1a0a0a !important}
     .exercise-card.dragging{opacity:.5;z-index:10}
     .exercise-card.drag-over{border-color:var(--orange);border-style:dashed}
-    .longpress-menu{display:none;position:absolute;top:50%;right:14px;transform:translateY(-50%);background:#222;border:1.5px solid var(--red);border-radius:12px;padding:6px;z-index:20;flex-direction:column;gap:4px;box-shadow:0 4px 20px rgba(0,0,0,.6)}
-    .longpress-menu.show{display:flex}
-    .lp-btn{border:none;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;padding:8px 14px;cursor:pointer;white-space:nowrap}
-    .lp-delete{background:var(--red);color:#fff}
-    .lp-cancel{background:#333;color:var(--muted)}
+
 
     .exercise-main{display:flex;align-items:center;gap:10px;padding:13px;cursor:pointer}
     .ex-number{font-family:'Bebas Neue',sans-serif;font-size:20px;color:#333;min-width:24px;line-height:1;transition:color .25s}
@@ -163,6 +159,28 @@
     .btn-mc{background:#222;color:var(--text)}
     .btn-mo{background:var(--orange);color:#000}
     .btn-mr{background:#e74c3c;color:#fff}
+    /* NOTA DO DIA */
+    .day-note-wrap{margin-bottom:12px}
+    .day-note{width:100%;background:#111;border:1.5px solid #222;border-radius:10px;color:#777;font-family:'Nunito',sans-serif;font-size:12px;font-weight:600;padding:9px 12px;outline:none;resize:none;min-height:38px}
+    .day-note:focus{border-color:#444;color:var(--text)}
+    /* INDICADOR DE DICA */
+    .dica-dot{display:inline-block;width:6px;height:6px;background:var(--blue-light);border-radius:50%;margin-left:5px;vertical-align:middle;flex-shrink:0}
+    /* HISTORICO RICO */
+    .hist-day-block{background:#111;border-radius:12px;padding:12px 14px;margin-bottom:10px}
+    .hist-day-meta{font-size:10px;color:#555;font-weight:700;margin-top:6px;display:flex;gap:10px}
+    .hist-day-nota{font-size:11px;color:#666;font-style:italic;margin-top:6px;padding-top:6px;border-top:1px solid #1a1a1a}
+    /* EXPORT/IMPORT */
+    .export-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:600;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+    .export-overlay.show{display:flex}
+    .export-box{background:var(--card);border:2px solid var(--orange);border-radius:20px;padding:22px 18px;width:100%;max-width:360px}
+    .export-box h3{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--orange);letter-spacing:1px;margin-bottom:6px}
+    .export-box p{font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5}
+    .export-code{width:100%;background:#111;border:1.5px solid #333;border-radius:10px;color:#aaa;font-family:monospace;font-size:11px;padding:10px;min-height:80px;resize:none;outline:none;margin-bottom:10px}
+    .export-btns{display:flex;gap:8px;flex-wrap:wrap}
+    .export-btns button{flex:1;min-width:80px;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;padding:10px;cursor:pointer}
+    .btn-copy{background:var(--orange);color:#000}
+    .btn-import-do{background:var(--blue);color:#fff}
+    .btn-close-export{background:#222;color:var(--muted)}
 </style>
 ```
 
@@ -176,6 +194,7 @@
                 <div class="streak-badge" id="streakBadge">🔥 <span id="streakNum">0</span></div>
                 <button class="btn-hist" onclick="showHist()">Hist.</button>
                 <button class="btn-reset" onclick="showReset()">Limpar</button>
+                <button class="btn-hist" onclick="showExport()" style="border-color:#3b5bdb;color:#748ffc">Export</button>
             </div>
         </div>
         <div class="tabs-row">
@@ -304,6 +323,20 @@
         <div class="mbtns">
             <button class="btn-mc" onclick="closeDeleteEx()">Cancelar</button>
             <button class="btn-mr" onclick="confirmDeleteEx()">Excluir</button>
+        </div>
+    </div>
+</div>
+
+<!-- EXPORT/IMPORT -->
+<div class="export-overlay" id="exportOverlay">
+    <div class="export-box">
+        <h3 id="exportTitle">Exportar Treino</h3>
+        <p id="exportDesc">Copie o codigo abaixo e compartilhe. Para importar, cole o codigo e toque em Importar.</p>
+        <textarea class="export-code" id="exportCode" readonly></textarea>
+        <div class="export-btns">
+            <button class="btn-copy" onclick="copyExportCode()">Copiar</button>
+            <button class="btn-import-do" onclick="switchToImport()">Importar</button>
+            <button class="btn-close-export" onclick="closeExport()">Fechar</button>
         </div>
     </div>
 </div>
@@ -469,7 +502,7 @@
         try{var s=localStorage.getItem('mt8');if(s){var p=JSON.parse(s);state=p.state||{};if(p.treinos)TREINOS=p.treinos;if(p.activeDay)activeDay=p.activeDay;if(p.chronoSec)chronoSec=p.chronoSec;}}catch(e){state={};}
         var cargas={};try{var cs=localStorage.getItem('mt8_cargas');if(cs)cargas=JSON.parse(cs);}catch(e){}
         TREINOS.forEach(function(t){
-            if(!state[t.id])state[t.id]={checked:t.exercicios.map(function(){return false;}),cargas:t.exercicios.map(function(){return '';}),series:t.exercicios.map(function(){return [];}),notes:t.exercicios.map(function(){return '';}),open:null};
+            if(!state[t.id])state[t.id]={checked:t.exercicios.map(function(){return false;}),cargas:t.exercicios.map(function(){return '';}),series:t.exercicios.map(function(){return [];}),notes:t.exercicios.map(function(){return '';}),open:null,dayNote:''};
             while(state[t.id].checked.length<t.exercicios.length)state[t.id].checked.push(false);
             while(state[t.id].series.length<t.exercicios.length)state[t.id].series.push([]);
             if(!state[t.id].cargas)state[t.id].cargas=t.exercicios.map(function(){return '';});
@@ -536,11 +569,9 @@
                 if(!pressing)return;
                 card.classList.add('pressing');
                 if(navigator.vibrate)navigator.vibrate(80);
-                // Fecha qualquer menu aberto
-                document.querySelectorAll('.longpress-menu.show').forEach(function(m){m.classList.remove('show');});
                 document.querySelectorAll('.exercise-card.pressing').forEach(function(c){if(c!==card)c.classList.remove('pressing');});
-                var menu=card.querySelector('.longpress-menu');
-                if(menu)menu.classList.add('show');
+                openDeleteEx(dayId,exIdx);
+                setTimeout(function(){card.classList.remove('pressing');},300);
             },DURATION);
         }
         function cancelPress(){
@@ -553,11 +584,7 @@
         card.addEventListener('mouseup',cancelPress);
         card.addEventListener('mouseleave',cancelPress);
     }
-    function closeLongMenu(card){
-        card.classList.remove('pressing');
-        var menu=card.querySelector('.longpress-menu');
-        if(menu)menu.classList.remove('show');
-    }
+
 
     // DRAG TO REORDER
     function initDrag(handle,card,dayId,exIdx){
@@ -636,6 +663,7 @@
                 '</div>'+
                 '<div class="progress-wrap"><div class="progress-bar" style="width:'+pct+'%"></div></div>'+
                 '<div class="progress-label">'+done+'/'+total+' - '+pct+'%</div>';
+                var dayNote=state[treino.id].dayNote||'';
 
             treino.exercicios.forEach(function(ex,i){
                 var isDone=state[treino.id].checked[i];
@@ -667,16 +695,13 @@
                     '<div class="exercise-main" onclick="cc(\''+treino.id+'\','+i+',event)">'+
                         '<button class="drag-handle" onclick="event.stopPropagation()">⠿</button>'+
                         '<div class="ex-number">'+(i+1)+'</div>'+
-                        '<div class="ex-info"><div class="ex-name">'+ex.nome+'</div><div class="ex-sets">'+ex.series+'</div></div>'+
+                        '<div class="ex-info"><div class="ex-name">'+ex.nome+(ex.dica?'<span class="dica-dot"></span>':'')+' </div><div class="ex-sets">'+ex.series+'</div></div>'+
                         '<div class="ex-right">'+
                             '<button class="edit-btn" onclick="eb(event,'+tidx+','+i+')">&#9998;</button>'+
                             '<div class="ex-check" onclick="ck(event,\''+treino.id+'\','+i+')">'+(isDone?'&#10003;':'')+'</div>'+
                         '</div>'+
                     '</div>'+
-                    '<div class="longpress-menu">'+
-                        '<button class="lp-btn lp-delete" onclick="openDeleteEx(\''+treino.id+'\','+i+')">🗑 Excluir exercicio</button>'+
-                        '<button class="lp-btn lp-cancel" onclick="closeLongMenu(this.closest(\'.exercise-card\'))">Cancelar</button>'+
-                    '</div>'+
+
                     '<div class="exercise-expand"><div class="expand-inner">'+
                         serieBtns+
                         '<div class="expand-row">'+
@@ -851,18 +876,32 @@
         document.getElementById('rSeries').textContent=totalSeries;document.getElementById('rTempo').textContent=m+'min';
         document.getElementById('rExercicios').textContent=t.exercicios.length;document.getElementById('rCarga').textContent=Math.round(totalCarga)+'kg';
         document.getElementById('resumoOverlay').classList.add('show');
+        saveHistMeta(dayId,m,totalSeries,Math.round(totalCarga));
         beep(880,.15,.6,'square');setTimeout(function(){beep(1100,.3,.7,'square');},200);
     }
     function closeResumo(){document.getElementById('resumoOverlay').classList.remove('show');}
 
     function showHist(){
         var hist={};try{var h=localStorage.getItem('mt8_hist');if(h)hist=JSON.parse(h);}catch(e){}
+        var meta={};try{var hm=localStorage.getItem('mt8_hist_meta');if(hm)meta=JSON.parse(hm);}catch(e){}
         var body=document.getElementById('histBody');var dates=Object.keys(hist).sort().reverse();
         if(!dates.length){body.innerHTML='<div class="hist-empty">Nenhum historico ainda.<br>Complete exercicios para registrar.</div>';document.getElementById('histOverlay').classList.add('show');return;}
         var html='';
         dates.forEach(function(d){
-            html+='<div class="hist-day-title">'+fmtDate(d)+'</div>';
-            Object.keys(hist[d]).forEach(function(k){var it=hist[d][k];html+='<div class="hist-item"><div><div class="hist-name">'+it.nome+'</div></div><div class="hist-carga">'+it.carga+'kg</div></div>';});
+            var m=meta[d]||{};
+            html+='<div class="hist-day-block">';
+            html+='<div class="hist-day-title" style="margin:0 0 8px">'+fmtDate(d)+(m.dayId?' — '+(TREINOS.find(function(t){return t.id===m.dayId;})||{title:m.dayId}).title:'')+'</div>';
+            Object.keys(hist[d]).forEach(function(k){
+                var it=hist[d][k];
+                html+='<div class="hist-item" style="background:#1a1a1a;margin-bottom:4px"><div><div class="hist-name">'+it.nome+'</div></div><div class="hist-carga">'+it.carga+'kg</div></div>';
+            });
+            html+='<div class="hist-day-meta">';
+            if(m.tempo)html+='<span>⏱ '+m.tempo+'min</span>';
+            if(m.series)html+='<span>✓ '+m.series+' series</span>';
+            if(m.carga)html+='<span>🏋 '+m.carga+'kg total</span>';
+            html+='</div>';
+            if(m.nota)html+='<div class="hist-day-nota">📝 '+m.nota+'</div>';
+            html+='</div>';
         });
         body.innerHTML=html;document.getElementById('histOverlay').classList.add('show');
     }
@@ -877,6 +916,75 @@
             state[t.id]={checked:t.exercicios.map(function(){return false;}),cargas:cargas,series:t.exercicios.map(function(){return [];}),notes:notes,open:null};
         });
         saveState();closeReset();buildUI();
+    }
+
+    // NOTA DO DIA
+    function saveDayNote(dayId,val){
+        if(!state[dayId])return;
+        state[dayId].dayNote=val;
+        saveState();
+    }
+
+    // SALVAR META DO DIA NO HISTORICO (chamado no showResumo)
+    function saveHistMeta(dayId,tempo,series,carga){
+        var meta={};try{var hm=localStorage.getItem('mt8_hist_meta');if(hm)meta=JSON.parse(hm);}catch(e){}
+        var today=todayStr();
+        meta[today]={dayId:dayId,tempo:tempo,series:series,carga:carga,nota:state[dayId]?state[dayId].dayNote||'':''};
+        try{localStorage.setItem('mt8_hist_meta',JSON.stringify(meta));}catch(e){}
+    }
+
+    // EXPORT / IMPORT
+    var importMode=false;
+    function showExport(){
+        importMode=false;
+        document.getElementById('exportTitle').textContent='Exportar / Importar Treino';
+        document.getElementById('exportDesc').textContent='Copie o codigo para compartilhar seu treino. Para importar um treino de outra pessoa, cole o codigo dela e toque em Importar.';
+        var data={treinos:TREINOS};
+        document.getElementById('exportCode').value=btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+        document.getElementById('exportCode').readOnly=false;
+        document.getElementById('exportOverlay').classList.add('show');
+    }
+    function closeExport(){document.getElementById('exportOverlay').classList.remove('show');}
+    function copyExportCode(){
+        var ta=document.getElementById('exportCode');
+        ta.select();
+        try{document.execCommand('copy');}catch(e){}
+        if(navigator.clipboard)navigator.clipboard.writeText(ta.value).catch(function(){});
+        var btn=document.querySelector('.btn-copy');
+        btn.textContent='Copiado!';setTimeout(function(){btn.textContent='Copiar';},2000);
+    }
+    function switchToImport(){
+        var code=document.getElementById('exportCode').value.trim();
+        if(!code){
+            document.getElementById('exportCode').placeholder='Cole aqui o codigo recebido...';
+            document.getElementById('exportCode').value='';
+            document.getElementById('exportCode').readOnly=false;
+            document.getElementById('exportCode').focus();
+            document.querySelector('.btn-import-do').textContent='Confirmar Import';
+            importMode=true;
+            return;
+        }
+        if(importMode){
+            try{
+                var decoded=JSON.parse(decodeURIComponent(escape(atob(code))));
+                if(!decoded.treinos||!Array.isArray(decoded.treinos))throw new Error('invalido');
+                TREINOS=decoded.treinos;
+                state={};
+                loadState();
+                saveState();
+                closeExport();
+                buildUI();
+                alert('Treino importado com sucesso!');
+            }catch(err){
+                alert('Codigo invalido. Verifique e tente novamente.');
+            }
+        } else {
+            document.getElementById('exportCode').value='';
+            document.getElementById('exportCode').placeholder='Cole aqui o codigo recebido...';
+            document.getElementById('exportCode').focus();
+            document.querySelector('.btn-import-do').textContent='Confirmar Import';
+            importMode=true;
+        }
     }
 
     loadState();buildUI();
